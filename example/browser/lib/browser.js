@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-var sasaki = window.sasaki = require('./lib/index.js');
+var kwskfs = window.kwskfs = require('./lib/index.js');
 },{"./lib/index.js":10}],2:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
@@ -575,33 +575,33 @@ var OAuth2client = /** @class */ (function () {
     OAuth2client.prototype.refreshToken = function (refreshToken) {
         return __awaiter(this, void 0, void 0, function () {
             var _this = this;
-            var body, options;
+            var formData, options;
             return __generator(this, function (_a) {
                 // request for new token
                 debug('refreshing access token...');
-                body = new FormData();
-                body.set('refresh_token', refreshToken);
-                body.set('client_id', this.options.clientId);
-                body.set('client_secret', this.options.clientSecret);
-                body.set('grant_type', 'refresh_token');
+                formData = new FormData();
+                formData.set('refresh_token', refreshToken);
+                formData.set('client_id', this.options.clientId);
+                formData.set('client_secret', this.options.clientSecret);
+                formData.set('grant_type', 'refresh_token');
                 options = {
                     method: 'POST',
-                    body: body
+                    body: formData
                 };
                 return [2 /*return*/, fetch("https://" + this.options.domain + "/token", options)
                         .then(function (response) { return __awaiter(_this, void 0, void 0, function () {
-                        var body_1, err, tokens;
+                        var body, err, tokens;
                         return __generator(this, function (_a) {
                             switch (_a.label) {
                                 case 0:
                                     if (!(response.status !== httpStatus.OK)) return [3 /*break*/, 2];
                                     return [4 /*yield*/, response.json()];
                                 case 1:
-                                    body_1 = _a.sent();
-                                    if (typeof body_1 === 'object' && body_1.errors !== undefined) {
-                                        err = new kwskfs_api_abstract_client_1.transporters.RequestError(body_1.errors.map(function (error) { return error.title + ":" + error.detail; }).join('\n'));
+                                    body = _a.sent();
+                                    if (typeof body === 'object' && body.errors !== undefined) {
+                                        err = new kwskfs_api_abstract_client_1.transporters.RequestError(body.errors.map(function (error) { return error.title + ":" + error.detail; }).join('\n'));
                                         err.code = response.status;
-                                        err.errors = body_1.errors;
+                                        err.errors = body.errors;
                                     }
                                     throw new Error('An unexpected error occurred');
                                 case 2: return [4 /*yield*/, response.json()];
@@ -1042,7 +1042,7 @@ exports.default = SilentLogoutHandler;
  * @ignore
  */
 Object.defineProperty(exports, "__esModule", { value: true });
-var sasaki = require("@motionpicture/kwskfs-api-abstract-client");
+var kwskfs = require("@motionpicture/kwskfs-api-abstract-client");
 var implicitGrantClient_1 = require("./auth/implicitGrantClient");
 /**
  * factory
@@ -1050,9 +1050,9 @@ var implicitGrantClient_1 = require("./auth/implicitGrantClient");
  * 全てのオブジェクトのインターフェースはここに含まれます。
  * @export
  */
-exports.factory = sasaki.factory;
-exports.service = sasaki.service;
-exports.transporters = sasaki.transporters;
+exports.factory = kwskfs.factory;
+exports.service = kwskfs.service;
+exports.transporters = kwskfs.transporters;
 /**
  * create OAuth2 client instance using implicit grant
  * @param options implicit grant configurations
@@ -1409,8 +1409,6 @@ exports.ActionService = ActionService;
 
 },{"../service":13}],15:[function(require,module,exports){
 "use strict";
-// import * as factory from '@motionpicture/kwskfs-factory';
-// import { OK } from 'http-status';
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1421,7 +1419,43 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+var http_status_1 = require("http-status");
 var service_1 = require("../service");
 /**
  * event service
@@ -1431,11 +1465,32 @@ var EventService = /** @class */ (function (_super) {
     function EventService() {
         return _super !== null && _super.apply(this, arguments) || this;
     }
+    /**
+     * 組織検索
+     */
+    // tslint:disable-next-line:no-single-line-block-comment
+    /* istanbul ignore next */
+    EventService.prototype.search = function (
+    /**
+     * 検索条件
+     */
+    params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/events/" + params.eventType,
+                        method: 'GET',
+                        qs: params,
+                        expectedStatusCodes: [http_status_1.OK]
+                    })];
+            });
+        });
+    };
     return EventService;
 }(service_1.Service));
 exports.EventService = EventService;
 
-},{"../service":13}],16:[function(require,module,exports){
+},{"../service":13,"http-status":107}],16:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2370,7 +2425,7 @@ exports.DefaultTransporter = DefaultTransporter;
 //     /**
 //      * Default user agent.
 //      */
-//     public static readonly USER_AGENT: string = `sasaki-api-nodejs-client/${pkg.version}`;
+//     public static readonly USER_AGENT: string = `kwskfs-api-nodejs-client/${pkg.version}`;
 //     public expectedStatusCodes: number[];
 //     constructor(expectedStatusCodes: number[]) {
 //         this.expectedStatusCodes = expectedStatusCodes;

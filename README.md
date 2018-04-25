@@ -38,7 +38,7 @@ npm install @motionpicture/kwskfs-api-javascript-client
 Include the library in your JavaScript file with
 
 ``` js
-const sasaki = require("@motionpicture/kwskfs-api-javascript-client");
+const kwskfs = require("@motionpicture/kwskfs-api-javascript-client");
 ```
 
 ### Browser
@@ -55,19 +55,14 @@ Example: Creates a URL Shortener client and retrieves the long url of the
 given short url:
 
 ``` js
-var sasaki = require('@motionpicture/kwskfs-api-javascript-client');
-var event = sasaki.service.event({
+var kwskfs = require('@motionpicture/kwskfs-api-javascript-client');
+var events = new kwskfs.service.Event({
     endpoint: 'endpoint'.
     auth: auth
 });
 
-var conditions = {
-    day: '20170817',
-    theater: '118'
-};
-
-event.url.searchIndividualScreeningEvent({
-    searchConditions: conditions
+events.search({
+    eventType: kwskfs.factory.eventType.FoodEvent
 }).then(function (events) {
     console.log('events:', events);
 }).catch(function (err) {
@@ -96,7 +91,7 @@ client is available at [`samples/browser/index.html`].
 redirect them to a consent page. To redirect them a consent page URL:
 
 ``` js
-var sasaki = require('@motionpicture/kwskfs-api-javascript-client');
+var kwskfs = require('@motionpicture/kwskfs-api-javascript-client');
 
 // generate a url that asks permissions for Sasai API scopes
 var scopes = [
@@ -104,7 +99,7 @@ var scopes = [
     'https://IDENTIFIER/events.read-only'
 ];
 
-var oauth2Client = new sasaki.auth.Implicit({
+var oauth2Client = new kwskfs.auth.Implicit({
     domain: DOMAIN,
     clientId: CLIENT_ID,
     responseType: 'token',
@@ -133,7 +128,7 @@ You can set the `auth` as a service-level option.
 Example: Setting a service-level `auth` option.
 
 ``` js
-var sasaki = require('@motionpicture/kwskfs-api-javascript-client');
+var kwskfs = require('@motionpicture/kwskfs-api-javascript-client');
 
 // generate a url that asks permissions for Sasai API scopes
 var scopes = [
@@ -141,7 +136,7 @@ var scopes = [
     'https://IDENTIFIER/events.read-only'
 ];
 
-var oauth2Client = new sasaki.auth.Implicit({
+var oauth2Client = new kwskfs.auth.Implicit({
     domain: DOMAIN,
     clientId: CLIENT_ID,
     responseType: 'token',
@@ -154,18 +149,8 @@ var oauth2Client = new sasaki.auth.Implicit({
 oauth2Client.authorize().then(function (credentials) {
     console.log('authorize result:', credentials);
 
-    var event = sasaki.service.event({
-        endpoint: 'endpoint'.
-        auth: oauth2Client
-    });
-
-    var conditions = {
-        day: '20170817',
-        theater: '118'
-    };
-
-    event.url.searchIndividualScreeningEvent({
-        searchConditions: conditions
+    events.search({
+        eventType: kwskfs.factory.eventType.FoodEvent
     }).then(function (events) {
         console.log('events:', events);
     }).catch(function (err) {

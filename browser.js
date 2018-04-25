@@ -1,1 +1,1 @@
-var sasaki = window.sasaki = require('./lib/index.js');
+var kwskfs = window.kwskfs = require('./lib/index.js');

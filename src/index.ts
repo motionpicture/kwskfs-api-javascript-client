@@ -4,7 +4,7 @@
  * @ignore
  */
 
-import * as sasaki from '@motionpicture/kwskfs-api-abstract-client';
+import * as kwskfs from '@motionpicture/kwskfs-api-abstract-client';
 
 import { ImplicitGrantClient, IOptions as IImplicitGrantClientOptions } from './auth/implicitGrantClient';
 
@@ -14,10 +14,10 @@ import { ImplicitGrantClient, IOptions as IImplicitGrantClientOptions } from './
  * 全てのオブジェクトのインターフェースはここに含まれます。
  * @export
  */
-export import factory = sasaki.factory;
+export import factory = kwskfs.factory;
 
-export import service = sasaki.service;
-export import transporters = sasaki.transporters;
+export import service = kwskfs.service;
+export import transporters = kwskfs.transporters;
 
 export type IImplicitGrantClient = ImplicitGrantClient;
 

@@ -14,13 +14,17 @@
             <br>
             <a href="javascript:void(0);" onclick="signOut();">signOut</a>
             <br>
-            <a href="javascript:void(0);" onclick="getContacts();">get contacts</a>
+            <a href="javascript:void(0);" onclick="getContacts();">連絡先取得</a>
             <br>
-            <a href="javascript:void(0);" onclick="updateContacts();">update contacts</a>
+            <a href="javascript:void(0);" onclick="updateContacts();">連絡先更新</a>
             <br>
-            <a href="javascript:void(0);" onclick="findCreditCards();">find credit cards</a>
+            <a href="javascript:void(0);" onclick="findCreditCards();">クレジットカード検索</a>
             <br>
-            <a href="javascript:void(0);" onclick="addCreditCard();">add credit cards</a>
+            <a href="javascript:void(0);" onclick="addCreditCard();">クレジットカード追加</a>
+            <br>
+            <a href="javascript:void(0);" onclick="searchEvents();">イベント検索</a>
+            <br>
+            <a href="javascript:void(0);" onclick="searchOrganizations();">組織検索</a>
             <br>
         </div>
         <div>
@@ -79,7 +83,7 @@
             nonce: randomString(16),
             tokenIssuer: ISSUER
         };
-        const auth = new sasaki.createAuthInstance(options);
+        const auth = new kwskfs.createAuthInstance(options);
 
         // check if already signed in
         // result is credentials
@@ -175,7 +179,7 @@
 
         function startPlaceOrderTransaction() {
             // search organizations
-            var placeOrderTransactions = new sasaki.service.transaction.PlaceOrder({
+            var placeOrderTransactions = new kwskfs.service.transaction.PlaceOrder({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -192,7 +196,7 @@
         }
 
         function getContacts() {
-            var people = new sasaki.service.Person({
+            var people = new kwskfs.service.Person({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -208,7 +212,7 @@
         }
 
         function updateContacts() {
-            var people = new sasaki.service.Person({
+            var people = new kwskfs.service.Person({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -230,7 +234,7 @@
         }
 
         function findCreditCards() {
-            var people = new sasaki.service.Person({
+            var people = new kwskfs.service.Person({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -246,7 +250,7 @@
         }
 
         function addCreditCard() {
-            var people = new sasaki.service.Person({
+            var people = new kwskfs.service.Person({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -267,7 +271,7 @@
         }
 
         function searchReservationOwnerships() {
-            var people = new sasaki.service.Person({
+            var people = new kwskfs.service.Person({
                 endpoint: API_ENDPOINT,
                 auth: auth
             });
@@ -276,6 +280,38 @@
             }).then(function (ownerships) {
                 console.log('ownerships:', ownerships);
                 document.getElementById('results').innerText = format(ownerships);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function searchEvents() {
+            var events = new kwskfs.service.Event({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            events.search({
+                eventType: kwskfs.factory.eventType.FoodEvent
+            }).then(function (events) {
+                console.log('events:', events);
+                document.getElementById('results').innerText = format(events);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function searchOrganizations() {
+            var organizations = new kwskfs.service.Organization({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            organizations.search({
+                organizationType: kwskfs.factory.organizationType.Restaurant
+            }).then(function (organizations) {
+                console.log('organizations:', organizations);
+                document.getElementById('results').innerText = format(organizations);
             }).catch(function (err) {
                 console.error(err);
                 document.getElementById('results').innerText = format(err);
