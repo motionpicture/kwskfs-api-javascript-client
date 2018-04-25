@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Browser test</title>
+    <!-- reading SDK in a script tag... -->
+    <script type="text/javascript" src="./lib/browser.js"></script>
+</head>
+
+<body>
+    <div id="signedIn" style="display:none;">
+        <div class="apis">
+            <a href="javascript:void(0);" onclick="refreshToken();">silent signIn</a>
+            <br>
+            <a href="javascript:void(0);" onclick="signOut();">signOut</a>
+            <br>
+            <a href="javascript:void(0);" onclick="getContacts();">get contacts</a>
+            <br>
+            <a href="javascript:void(0);" onclick="updateContacts();">update contacts</a>
+            <br>
+            <a href="javascript:void(0);" onclick="findCreditCards();">find credit cards</a>
+            <br>
+            <a href="javascript:void(0);" onclick="addCreditCard();">add credit cards</a>
+            <br>
+        </div>
+        <div>
+            profile:
+            <br>
+            <textarea id="profile" readonly rows="20" cols="80"></textarea>
+        </div>
+    </div>
+
+    <div id="signedOut" style="display:none;">
+        <a href="javascript:void(0);" onclick="signIn();">signIn</a>
+        <br>
+    </div>
+
+    <p>
+        results:
+        <br>
+        <textarea id="results" readonly rows="20" cols="80"></textarea>
+    </p>
+    <p>
+        idToken:
+        <br>
+        <textarea id="idToken" readonly rows="20" cols="80"></textarea>
+    </p>
+    <p>
+        accessToken:
+        <br>
+        <textarea id="accessToken" readonly rows="20" cols="80"></textarea>
+    </p>
+
+    <script>
+        // AWS Defining Resource Servers for Your User Pool
+        // http://docs.aws.amazon.com/ja_jp/cognito/latest/developerguide/cognito-user-pools-define-resource-servers.html
+        // https://aws.amazon.com/blogs/mobile/integrating-amazon-cognito-user-pools-with-api-gateway/
+
+        var DOMAIN = 'kwskfs-development.auth.ap-northeast-1.amazoncognito.com';
+        var CLIENT_ID = '18id9raj4ushaptc68finc51t4'; // given by a token provider
+        var CALLBACK_URL = 'https://localhost:8080/signIn.html'; // an application should prepare it
+        var LOGOUT_URL = 'https://localhost:8080/signOut.html'; // an application should prepare it
+        var ISSUER = 'https://cognito-idp.ap-northeast-1.amazonaws.com/ap-northeast-1_6Lcve0SqW';
+        var API_ENDPOINT = 'https://kwskfs-api-development.azurewebsites.net';
+        var RESOURCE_SERVER_IDENFIER = 'https://kwskfs-api-development.azurewebsites.net';
+
+        var credentials = null;
+
+        var scopes = [];
+
+        var options = {
+            domain: DOMAIN,
+            clientId: CLIENT_ID,
+            responseType: 'token',
+            redirectUri: CALLBACK_URL,
+            logoutUri: LOGOUT_URL,
+            scope: scopes.join(' '),
+            state: '12345',
+            nonce: randomString(16),
+            tokenIssuer: ISSUER
+        };
+        const auth = new sasaki.createAuthInstance(options);
+
+        // check if already signed in
+        // result is credentials
+        auth.isSignedIn().then(function (result) {
+            if (result === null) {
+                onSignOut();
+            } else {
+                credentials = result;
+                onSignIn();
+            }
+        });
+
+        function randomString(length) {
+            var bytes = new Uint8Array(length);
+            var random = window.crypto.getRandomValues(bytes);
+            var result = [];
+            var charset = '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz-._~'
+            random.forEach(function (c) {
+                result.push(charset[c % charset.length]);
+            });
+            return result.join('');
+        }
+
+        function onSignIn() {
+            toggleUserDisplay(true);
+            setTimeout(displayProfile, 100);
+        }
+
+        function onSignOut() {
+            toggleUserDisplay(false);
+            initTextarea();
+        }
+
+        function format(value) {
+            return JSON.stringify(value, null, 4);
+        }
+
+        function toggleUserDisplay(isSignedIn) {
+            if (isSignedIn) {
+                document.getElementById('signedIn').style.display = 'block';
+                document.getElementById('signedOut').style.display = 'none';
+            } else {
+                document.getElementById('signedIn').style.display = 'none';
+                document.getElementById('signedOut').style.display = 'block';
+            }
+        }
+
+        function displayProfile() {
+            document.getElementById('profile').innerText = format(credentials.idTokenPayload);
+        }
+
+        function initTextarea() {
+            Array.from(document.getElementsByTagName('textarea'), function (element) {
+                element.innerText = '';
+            });
+        }
+
+        function signIn() {
+            // signIn
+            // result is credentials
+            auth.signIn().then(function (result) {
+                console.log('signIn result:', result);
+                document.getElementById('idToken').innerText = result.idToken;
+                document.getElementById('accessToken').innerText = result.accessToken;
+
+                credentials = result;
+                onSignIn();
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+
+        function refreshToken() {
+            // refreshToken in iframe
+            // result is credentials
+            auth.refreshToken().then(function (result) {
+                console.log('tryRenewAuth result:', result);
+                document.getElementById('idToken').innerText = result.idToken;
+                document.getElementById('accessToken').innerText = result.accessToken;
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+
+        function signOut() {
+            auth.signOut().then(function () {
+                credentials = null;
+                onSignOut();
+            }).catch(function (err) {
+                console.error(err);
+            });
+        }
+
+        function startPlaceOrderTransaction() {
+            // search organizations
+            var placeOrderTransactions = new sasaki.service.transaction.PlaceOrder({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            placeOrderTransactions.start({
+                expires: new Date(),
+                sellerId: '5979a3bfe53ebc2b4e6df88d'
+            }).then(function (transaction) {
+                console.log('transaction:', transaction);
+                document.getElementById('results').innerText = format(transaction);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function getContacts() {
+            var people = new sasaki.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.getContacts({
+                personId: 'me'
+            }).then(function (contacts) {
+                console.log('contacts:', contacts);
+                document.getElementById('results').innerText = format(contacts);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function updateContacts() {
+            var people = new sasaki.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.updateContacts({
+                personId: 'me',
+                contacts: {
+                    email: 'test@example.com',
+                    givenName: 'めい',
+                    familyName: 'せい',
+                    telephone: '09012345678',
+                }
+            }).then(function (result) {
+                console.log('result:', result);
+                document.getElementById('results').innerText = format(result);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function findCreditCards() {
+            var people = new sasaki.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.findCreditCards({
+                personId: 'me'
+            }).then(function (creditCards) {
+                console.log('creditCards:', creditCards);
+                document.getElementById('results').innerText = format(creditCards);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function addCreditCard() {
+            var people = new sasaki.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.addCreditCard({
+                personId: 'me',
+                creditCard: {
+                    cardNo: '4111111111111111',
+                    expire: '2412',
+                    holderName: 'AA BB'
+                }
+            }).then(function (createdCreditCard) {
+                console.log('createdCreditCard:', createdCreditCard);
+                document.getElementById('results').innerText = format(createdCreditCard);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function searchReservationOwnerships() {
+            var people = new sasaki.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.searchReservationOwnerships({
+                personId: 'me'
+            }).then(function (ownerships) {
+                console.log('ownerships:', ownerships);
+                document.getElementById('results').innerText = format(ownerships);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+    </script>
+
+</body>
+
+</html>
