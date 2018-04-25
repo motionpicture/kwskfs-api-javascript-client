@@ -1,0 +1,1 @@
+var sasaki = window.sasaki = require('./lib/index.js');
