@@ -18,9 +18,11 @@
             <br>
             <a href="javascript:void(0);" onclick="updateContacts();">連絡先更新</a>
             <br>
+            <a href="javascript:void(0);" onclick="addCreditCard();">クレジットカード追加</a>
+            <br>
             <a href="javascript:void(0);" onclick="findCreditCards();">クレジットカード検索</a>
             <br>
-            <a href="javascript:void(0);" onclick="addCreditCard();">クレジットカード追加</a>
+            <a href="javascript:void(0);" onclick="findAccounts();">口座検索</a>
             <br>
             <a href="javascript:void(0);" onclick="searchEvents();">イベント検索</a>
             <br>
@@ -243,6 +245,22 @@
             }).then(function (creditCards) {
                 console.log('creditCards:', creditCards);
                 document.getElementById('results').innerText = format(creditCards);
+            }).catch(function (err) {
+                console.error(err);
+                document.getElementById('results').innerText = format(err);
+            });
+        }
+
+        function findAccounts() {
+            var people = new kwskfs.service.Person({
+                endpoint: API_ENDPOINT,
+                auth: auth
+            });
+            people.findAccounts({
+                personId: 'me'
+            }).then(function (accounts) {
+                console.log('accounts:', accounts);
+                document.getElementById('results').innerText = format(accounts);
             }).catch(function (err) {
                 console.error(err);
                 document.getElementById('results').innerText = format(err);
