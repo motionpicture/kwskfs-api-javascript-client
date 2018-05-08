@@ -104,7 +104,7 @@ var IframeHandler = /** @class */ (function () {
 }());
 exports.default = IframeHandler;
 
-},{"debug":145}],4:[function(require,module,exports){
+},{"debug":149}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -448,7 +448,7 @@ var ImplicitGrantClient = /** @class */ (function (_super) {
 }(oAuth2client_1.default));
 exports.ImplicitGrantClient = ImplicitGrantClient;
 
-},{"./error":2,"./oAuth2client":5,"./popupAuthenticationHandler":6,"./silentAuthenticationHandler":8,"./silentLogoutHandler":9,"debug":145,"idtoken-verifier":154,"qs":160}],5:[function(require,module,exports){
+},{"./error":2,"./oAuth2client":5,"./popupAuthenticationHandler":6,"./silentAuthenticationHandler":8,"./silentLogoutHandler":9,"debug":149,"idtoken-verifier":158,"qs":164}],5:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -640,7 +640,7 @@ var OAuth2client = /** @class */ (function () {
 }());
 exports.default = OAuth2client;
 
-},{"@motionpicture/kwskfs-api-abstract-client":12,"debug":145,"http-status":147,"isomorphic-fetch":155}],6:[function(require,module,exports){
+},{"@motionpicture/kwskfs-api-abstract-client":12,"debug":149,"http-status":151,"isomorphic-fetch":159}],6:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -824,7 +824,7 @@ var PopupHandler = /** @class */ (function () {
 }());
 exports.default = PopupHandler;
 
-},{"debug":145}],8:[function(require,module,exports){
+},{"debug":149}],8:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -1281,7 +1281,7 @@ var service;
     })(transaction = service.transaction || (service.transaction = {}));
 })(service = exports.service || (exports.service = {}));
 
-},{"./auth/authClient":11,"./service/action":14,"./service/event":15,"./service/order":16,"./service/organization":17,"./service/person":18,"./service/place":19,"./service/transaction/placeOrder":20,"./service/transaction/returnOrder":21,"./transporters":22,"@motionpicture/kwskfs-factory":99}],13:[function(require,module,exports){
+},{"./auth/authClient":11,"./service/action":14,"./service/event":15,"./service/order":16,"./service/organization":17,"./service/person":18,"./service/place":19,"./service/transaction/placeOrder":20,"./service/transaction/returnOrder":21,"./transporters":22,"@motionpicture/kwskfs-factory":103}],13:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -1379,7 +1379,7 @@ var Service = /** @class */ (function () {
 }());
 exports.Service = Service;
 
-},{"./transporters":22,"qs":160}],14:[function(require,module,exports){
+},{"./transporters":22,"qs":164}],14:[function(require,module,exports){
 "use strict";
 // import * as factory from '@motionpicture/kwskfs-factory';
 // import { CREATED, OK } from 'http-status';
@@ -1458,7 +1458,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var http_status_1 = require("http-status");
 var service_1 = require("../service");
 /**
- * event service
+ * イベントサービス
  */
 var EventService = /** @class */ (function (_super) {
     __extends(EventService, _super);
@@ -1466,7 +1466,7 @@ var EventService = /** @class */ (function (_super) {
         return _super !== null && _super.apply(this, arguments) || this;
     }
     /**
-     * 組織検索
+     * イベント検索
      */
     // tslint:disable-next-line:no-single-line-block-comment
     /* istanbul ignore next */
@@ -1486,11 +1486,47 @@ var EventService = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * 特定イベントの販売情報を検索する
+     */
+    // tslint:disable-next-line:no-single-line-block-comment
+    /* istanbul ignore next */
+    EventService.prototype.searchOffers = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/events/" + params.eventType + "/" + params.eventIdentifier + "/offers",
+                        method: 'GET',
+                        qs: params,
+                        expectedStatusCodes: [http_status_1.OK]
+                    })];
+            });
+        });
+    };
+    /**
+     * 特定イベントの特定販売情報に対して、在庫状況を更新する
+     * 管理者権限が必要です。
+     */
+    // tslint:disable-next-line:no-single-line-block-comment
+    /* istanbul ignore next */
+    EventService.prototype.changeMenuItemOfferAvailability = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        // tslint:disable-next-line:max-line-length
+                        uri: "/events/" + params.eventType + "/" + params.eventIdentifier + "/offers/" + params.organizationId + "/menuItem/" + params.menuItemIdentifier + "/" + params.offerIdentifier + "/availability/" + params.availability,
+                        method: 'PUT',
+                        qs: params,
+                        expectedStatusCodes: [http_status_1.NO_CONTENT]
+                    })];
+            });
+        });
+    };
     return EventService;
 }(service_1.Service));
 exports.EventService = EventService;
 
-},{"../service":13,"http-status":147}],16:[function(require,module,exports){
+},{"../service":13,"http-status":23}],16:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1567,7 +1603,7 @@ var OrderService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.OrderService = OrderService;
 
-},{"../service":13,"http-status":147}],17:[function(require,module,exports){
+},{"../service":13,"http-status":23}],17:[function(require,module,exports){
 "use strict";
 /**
  * 組織サービス
@@ -1653,7 +1689,7 @@ var OrganizationService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.OrganizationService = OrganizationService;
 
-},{"../service":13,"http-status":147}],18:[function(require,module,exports){
+},{"../service":13,"http-status":23}],18:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1861,7 +1897,7 @@ var PersonService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.PersonService = PersonService;
 
-},{"../service":13,"http-status":147}],19:[function(require,module,exports){
+},{"../service":13,"http-status":23}],19:[function(require,module,exports){
 "use strict";
 /**
  * 場所サービス
@@ -1896,7 +1932,6 @@ exports.PlaceService = PlaceService;
 "use strict";
 /**
  * 注文取引サービス
- * @namespace service.transaction.placeOrder
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2119,17 +2154,17 @@ var PlaceOrderTransactionService = /** @class */ (function (_super) {
         });
     };
     /**
-     * 確定した取引に関して、購入者にメール通知を送信する
-     * @returns メール送信タスク
+     * 明示的に取引を中止する
+     * 既に確定済、あるいは、期限切れの取引に対して実行するとNotFoundエラーが返されます。
+     * @param params.transactionId 取引ID
      */
-    PlaceOrderTransactionService.prototype.sendEmailNotification = function (params) {
+    PlaceOrderTransactionService.prototype.cancel = function (params) {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
                 return [2 /*return*/, this.fetch({
-                        uri: "/transactions/placeOrder/" + params.transactionId + "/tasks/sendEmailNotification",
+                        uri: "/transactions/placeOrder/" + params.transactionId + "/cancel",
                         method: 'POST',
-                        expectedStatusCodes: [http_status_1.CREATED],
-                        body: params.emailMessageAttributes
+                        expectedStatusCodes: [http_status_1.NO_CONTENT]
                     })];
             });
         });
@@ -2138,11 +2173,10 @@ var PlaceOrderTransactionService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.PlaceOrderTransactionService = PlaceOrderTransactionService;
 
-},{"../../service":13,"http-status":147}],21:[function(require,module,exports){
+},{"../../service":13,"http-status":23}],21:[function(require,module,exports){
 "use strict";
 /**
  * 注文返品取引サービス
- * @namespace service.transaction.returnOrder
  */
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2234,11 +2268,27 @@ var ReturnOrderTransactionService = /** @class */ (function (_super) {
             });
         });
     };
+    /**
+     * 明示的に取引を中止する
+     * 既に確定済、あるいは、期限切れの取引に対して実行するとNotFoundエラーが返されます。
+     * @param params.transactionId 取引ID
+     */
+    ReturnOrderTransactionService.prototype.cancel = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/transactions/returnOrder/" + params.transactionId + "/cancel",
+                        method: 'POST',
+                        expectedStatusCodes: [http_status_1.NO_CONTENT]
+                    })];
+            });
+        });
+    };
     return ReturnOrderTransactionService;
 }(service_1.Service));
 exports.ReturnOrderTransactionService = ReturnOrderTransactionService;
 
-},{"../../service":13,"http-status":147}],22:[function(require,module,exports){
+},{"../../service":13,"http-status":23}],22:[function(require,module,exports){
 "use strict";
 // tslint:disable:max-classes-per-file
 var __extends = (this && this.__extends) || (function () {
@@ -2504,7 +2554,492 @@ exports.DefaultTransporter = DefaultTransporter;
 //     }
 // }
 
-},{"debug":145,"http-status":147,"isomorphic-fetch":155}],23:[function(require,module,exports){
+},{"debug":149,"http-status":23,"isomorphic-fetch":159}],23:[function(require,module,exports){
+// Generated by CoffeeScript 2.3.0
+// # node-http-status
+
+// **Reference:**  
+// http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html  
+// http://www.w3.org/Protocols/rfc2616/rfc2616-sec6.html#sec6.1.1
+module.exports = {
+  // ## Informational 1xx
+
+  // Request received, continuing process.
+
+  // 100 - The server has received the request headers and the client should proceed to send the request body.
+  100: 'Continue',
+  '100_NAME': 'CONTINUE',
+  '100_MESSAGE': 'The server has received the request headers and the client should proceed to send the request body.',
+  CONTINUE: 100,
+  // 101 - The requester has asked the server to switch protocols and the server has agreed to do so.
+  101: 'Switching Protocols',
+  '101_NAME': 'SWITCHING_PROTOCOLS',
+  '101_MESSAGE': 'The requester has asked the server to switch protocols and the server has agreed to do so.',
+  SWITCHING_PROTOCOLS: 101,
+  // ## Successful 2xx
+
+  // The action was successfully received, understood, and accepted.
+
+  // 200 - Standard response for successful HTTP requests.
+  200: 'OK',
+  '200_NAME': 'OK',
+  '200_MESSAGE': 'Standard response for successful HTTP requests.',
+  OK: 200,
+  // 201 - The request has been fulfilled, resulting in the creation of a new resource.
+  201: 'Created',
+  '201_NAME': 'CREATED',
+  '201_MESSAGE': 'The request has been fulfilled, resulting in the creation of a new resource.',
+  CREATED: 201,
+  // 202 - The request has been accepted for processing, but the processing has not been completed.
+  202: 'Accepted',
+  '202_NAME': 'ACCEPTED',
+  '202_MESSAGE': 'The request has been accepted for processing, but the processing has not been completed.',
+  ACCEPTED: 202,
+  // 203 (since HTTP/1.1) - The server is a transforming proxy (e.g. a Web accelerator) that received a 200 OK from its origin, but is returning a modified version of the origin's response.
+  203: 'Non-Authoritative Information',
+  '203_NAME': 'NON_AUTHORITATIVE_INFORMATION',
+  '203_MESSAGE': 'The server is a transforming proxy (e.g. a Web accelerator) that received a 200 OK from its origin, but is returning a modified version of the origin\'s response.',
+  NON_AUTHORITATIVE_INFORMATION: 203,
+  // 204 - The server successfully processed the request and is not returning any content.
+  204: 'No Content',
+  '204_NAME': 'NO_CONTENT',
+  '204_MESSAGE': 'The server successfully processed the request and is not returning any content.',
+  NO_CONTENT: 204,
+  // 205 - The server successfully processed the request, but is not returning any content. Unlike a 204 response, this response requires that the requester reset the document view.
+  205: 'Reset Content',
+  '205_NAME': 'RESET_CONTENT',
+  '205_MESSAGE': 'The server successfully processed the request, but is not returning any content. Unlike a 204 response, this response requires that the requester reset the document view.',
+  RESET_CONTENT: 205,
+  // 206 (RFC 7233) - The server is delivering only part of the resource (byte serving) due to a range header sent by the client.
+  206: 'Partial Content',
+  '206_NAME': 'PARTIAL_CONTENT',
+  '206_MESSAGE': 'The server is delivering only part of the resource (byte serving) due to a range header sent by the client.',
+  PARTIAL_CONTENT: 206,
+  // 207 (WebDAV; RFC 4918) - The message body that follows is by default an XML message and can contain a number of separate response codes, depending on how many sub-requests were made.
+  207: 'Multi Status',
+  '207_NAME': 'MULTI_STATUS',
+  '207_MESSAGE': 'The message body that follows is by default an XML message and can contain a number of separate response codes, depending on how many sub-requests were made.',
+  MULTI_STATUS: 207,
+  // 208 (WebDAV; RFC 5842) - The members of a DAV binding have already been enumerated in a preceding part of the (multistatus) response, and are not being included again.
+  208: 'Already Reported',
+  '208_NAME': 'ALREADY_REPORTED',
+  '208_MESSAGE': 'The members of a DAV binding have already been enumerated in a preceding part of the (multistatus) response, and are not being included again.',
+  ALREADY_REPORTED: 208,
+  // 204 (RFC 3229) - The server has fulfilled a request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.
+  226: 'IM Used',
+  '226_NAME': 'IM_USED',
+  '226_MESSAGE': 'The server has fulfilled a request for the resource, and the response is a representation of the result of one or more instance-manipulations applied to the current instance.',
+  IM_USED: 226,
+  // ## Redirection 3xx
+
+  // Further action must be taken in order to complete the request.
+
+  // 300 - Indicates multiple options for the resource from which the client may choose.
+  300: 'Multiple Choices',
+  '300_NAME': 'MULTIPLE_CHOICES',
+  '300_MESSAGE': 'Indicates multiple options for the resource from which the client may choose.',
+  MULTIPLE_CHOICES: 300,
+  // 301 - This and all future requests should be directed to the given URI.
+  301: 'Moved Permanently',
+  '301_NAME': 'MOVED_PERMANENTLY',
+  '301_MESSAGE': 'This and all future requests should be directed to the given URI.',
+  MOVED_PERMANENTLY: 301,
+  // 302 - This is an example of industry practice contradicting the standard. The HTTP/1.0 specification (RFC 1945) required the client to perform a temporary redirect (the original describing phrase was "Moved Temporarily"), but popular browsers implemented 302 with the functionality of a 303 See Other. Therefore, HTTP/1.1 added status codes 303 and 307 to distinguish between the two behaviours.
+  302: 'Found',
+  '302_NAME': 'FOUND',
+  '302_MESSAGE': 'This is an example of industry practice contradicting the standard. The HTTP/1.0 specification (RFC 1945) required the client to perform a temporary redirect (the original describing phrase was "Moved Temporarily"), but popular browsers implemented 302 with the functionality of a 303 See Other. Therefore, HTTP/1.1 added status codes 303 and 307 to distinguish between the two behaviours.',
+  FOUND: 302,
+  // 303 (since HTTP/1.1) - The response to the request can be found under another URI using the GET method.
+  303: 'See Other',
+  '303_NAME': 'SEE_OTHER',
+  '303_MESSAGE': 'The response to the request can be found under another URI using the GET method.',
+  SEE_OTHER: 303,
+  // 304 (RFC 7232) - Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match.
+  304: 'Not Modified',
+  '304_NAME': 'NOT_MODIFIED',
+  '304_MESSAGE': 'Indicates that the resource has not been modified since the version specified by the request headers If-Modified-Since or If-None-Match.',
+  NOT_MODIFIED: 304,
+  // 305 (since HTTP/1.1) - The requested resource is available only through a proxy, the address for which is provided in the response.
+  305: 'Use Proxy',
+  '304_NAME': 'USE_PROXY',
+  '304_MESSAGE': 'The requested resource is available only through a proxy, the address for which is provided in the response.',
+  USE_PROXY: 305,
+  // 306 - No longer used. Originally meant "Subsequent requests should use the specified proxy.
+  306: 'Switch Proxy',
+  '306_NAME': 'SWITCH_PROXY',
+  '306_MESSAGE': 'No longer used. Originally meant "Subsequent requests should use the specified proxy.',
+  SWITCH_PROXY: 306,
+  // 307 (since HTTP/1.1) - In this case, the request should be repeated with another URI; however, future requests should still use the original URI.
+  307: 'Temporary Redirect',
+  '307_NAME': 'TEMPORARY_REDIRECT',
+  '307_MESSAGE': 'In this case, the request should be repeated with another URI; however, future requests should still use the original URI.',
+  TEMPORARY_REDIRECT: 307,
+  // 308 (RFC 7538) - The request and all future requests should be repeated using another URI.
+  308: 'Permanent Redirect',
+  '308_NAME': 'PERMANENT_REDIRECT',
+  '308_MESSAGE': 'The request and all future requests should be repeated using another URI.',
+  PERMANENT_REDIRECT: 308,
+  // ## Client Error 4xx
+
+  // The request contains bad syntax or cannot be fulfilled.
+
+  // 400 - The server cannot or will not process the request due to an apparent client error.
+  400: 'Bad Request',
+  '400_NAME': 'BAD_REQUEST',
+  '400_MESSAGE': 'The server cannot or will not process the request due to an apparent client error.',
+  BAD_REQUEST: 400,
+  // 401 (RFC 7235) - Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.
+  401: 'Unauthorized',
+  '401_NAME': 'UNAUTHORIZED',
+  '401_MESSAGE': 'Similar to 403 Forbidden, but specifically for use when authentication is required and has failed or has not yet been provided.',
+  UNAUTHORIZED: 401,
+  // 402 - Reserved for future use. The original intention was that this code might be used as part of some form of digital cash or micropayment scheme, as proposed for example by GNU Taler, but that has not yet happened, and this code is not usually used.
+  402: 'Payment Required',
+  '402_NAME': 'PAYMENT_REQUIRED',
+  '402_MESSAGE': 'Reserved for future use. The original intention was that this code might be used as part of some form of digital cash or micropayment scheme, as proposed for example by GNU Taler, but that has not yet happened, and this code is not usually used.',
+  PAYMENT_REQUIRED: 402,
+  // 403 - The request was valid, but the server is refusing action.
+  403: 'Forbidden',
+  '403_NAME': 'FORBIDDEN',
+  '403_MESSAGE': 'The request was valid, but the server is refusing action.',
+  FORBIDDEN: 403,
+  // 404 - The requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible.
+  404: 'Not Found',
+  '404_NAME': 'NOT_FOUND',
+  '404_MESSAGE': 'The requested resource could not be found but may be available in the future. Subsequent requests by the client are permissible.',
+  NOT_FOUND: 404,
+  // 405 - A request method is not supported for the requested resource.
+  405: 'Method Not Allowed',
+  '405_NAME': 'METHOD_NOT_ALLOWED',
+  '405_MESSAGE': 'A request method is not supported for the requested resource.',
+  METHOD_NOT_ALLOWED: 405,
+  // 406 - The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request.
+  406: 'Not Acceptable',
+  '406_NAME': 'NOT_ACCEPTABLE',
+  '406_MESSAGE': 'The requested resource is capable of generating only content not acceptable according to the Accept headers sent in the request.',
+  NOT_ACCEPTABLE: 406,
+  // 407 (RFC 7235) - The client must first authenticate itself with the proxy.
+  407: 'Proxy Authentication Required',
+  '407_NAME': 'PROXY_AUTHENTICATION_REQUIRED',
+  '407_MESSAGE': 'The client must first authenticate itself with the proxy.',
+  PROXY_AUTHENTICATION_REQUIRED: 407,
+  // 408 - The server timed out waiting for the request.
+  408: 'Request Time-out',
+  '408_NAME': 'REQUEST_TIMEOUT',
+  '408_MESSAGE': 'The server timed out waiting for the request.',
+  REQUEST_TIMEOUT: 408,
+  // 409 - Indicates that the request could not be processed because of conflict in the request, such as an edit conflict between multiple simultaneous updates.
+  409: 'Conflict',
+  '409_NAME': 'CONFLICT',
+  '409_MESSAGE': 'Indicates that the request could not be processed because of conflict in the request, such as an edit conflict between multiple simultaneous updates.',
+  CONFLICT: 409,
+  // 410 - Indicates that the resource requested is no longer available and will not be available again.
+  410: 'Gone',
+  '410_NAME': 'GONE',
+  '410_MESSAGE': 'Indicates that the resource requested is no longer available and will not be available again.',
+  GONE: 410,
+  // 411 - The request did not specify the length of its content, which is required by the requested resource.
+  411: 'Length Required',
+  '411_NAME': 'LENGTH_REQUIRED',
+  '411_MESSAGE': 'The request did not specify the length of its content, which is required by the requested resource.',
+  LENGTH_REQUIRED: 411,
+  // 412 (RFC 7232) - The server does not meet one of the preconditions that the requester put on the request.
+  412: 'Precondition Failed',
+  '412_NAME': 'PRECONDITION_FAILED',
+  '412_MESSAGE': 'The server does not meet one of the preconditions that the requester put on the request.',
+  PRECONDITION_FAILED: 412,
+  // 413 (RFC 7231) - The request is larger than the server is willing or able to process. Previously called "Request Entity Too Large".
+  413: 'Request Entity Too Large',
+  '413_NAME': 'REQUEST_ENTITY_TOO_LARGE',
+  '413_MESSAGE': 'The request is larger than the server is willing or able to process. Previously called "Request Entity Too Large".',
+  REQUEST_ENTITY_TOO_LARGE: 413,
+  // 414 (RFC 7231) - The URI provided was too long for the server to process.
+  414: 'Request-URI Too Large',
+  '414_NAME': 'REQUEST_URI_TOO_LONG',
+  '414_MESSAGE': 'The URI provided was too long for the server to process.',
+  REQUEST_URI_TOO_LONG: 414,
+  // 415 - The request entity has a media type which the server or resource does not support.
+  415: 'Unsupported Media Type',
+  '415_NAME': 'UNSUPPORTED_MEDIA_TYPE',
+  '415_MESSAGE': 'The request entity has a media type which the server or resource does not support.',
+  UNSUPPORTED_MEDIA_TYPE: 415,
+  // 416 (RFC 7233) - The client has asked for a portion of the file (byte serving), but the server cannot supply that portion.
+  416: 'Requested Range not Satisfiable',
+  '416_NAME': 'REQUESTED_RANGE_NOT_SATISFIABLE',
+  '416_MESSAGE': 'The client has asked for a portion of the file (byte serving), but the server cannot supply that portion.',
+  REQUESTED_RANGE_NOT_SATISFIABLE: 416,
+  // 417 - The server cannot meet the requirements of the Expect request-header field.
+  417: 'Expectation Failed',
+  '417_NAME': 'EXPECTATION_FAILED',
+  '417_MESSAGE': 'The server cannot meet the requirements of the Expect request-header field.',
+  EXPECTATION_FAILED: 417,
+  // 418 (RFC 2324, RFC 7168) - Any attempt to brew coffee with a teapot should result in the error code "418 I'm a teapot". The resulting entity body MAY be short and stout. This code was defined in 1998 as one of the traditional IETF April Fools' jokes, in RFC 2324, Hyper Text Coffee Pot Control Protocol, and is not expected to be implemented by actual HTTP servers. The RFC specifies this code should be returned by teapots requested to brew coffee. This HTTP status is used as an Easter egg in some websites, including Google.com.
+  418: 'I\'m a teapot',
+  '418_NAME': 'IM_A_TEAPOT',
+  '418_MESSAGE': 'Any attempt to brew coffee with a teapot should result in the error code "418 I\'m a teapot". The resulting entity body MAY be short and stout.',
+  IM_A_TEAPOT: 418,
+  // 421 (RFC 7540) - The request was directed at a server that is not able to produce a response.
+  421: 'Misdirected Request',
+  '421_NAME': 'MISDIRECTED_REQUEST',
+  '421_MESSAGE': 'The request was directed at a server that is not able to produce a response.',
+  MISDIRECTED_REQUEST: 421,
+  // 422 (WebDAV; RFC 4918) - The request was well-formed but was unable to be followed due to semantic errors.
+  422: 'Unprocessable Entity',
+  '422_NAME': 'UNPROCESSABLE_ENTITY',
+  '422_MESSAGE': 'The request was well-formed but was unable to be followed due to semantic errors.',
+  UNPROCESSABLE_ENTITY: 422,
+  // 423 (WebDAV; RFC 4918) - The resource that is being accessed is locked.
+  423: 'Locked',
+  '423_NAME': 'LOCKED',
+  '423_MESSAGE': 'The resource that is being accessed is locked.',
+  LOCKED: 423,
+  // 424 (WebDAV; RFC 4918) - The request failed because it depended on another request and that request failed.
+  424: 'Failed Dependency',
+  '424_NAME': 'FAILED_DEPENDENCY',
+  '424_MESSAGE': 'The request failed because it depended on another request and that request failed.',
+  FAILED_DEPENDENCY: 424,
+  // 426 - The client should switch to a different protocol such as TLS/1.0, given in the Upgrade header field.
+  426: 'Upgrade Required',
+  '426_NAME': 'UPGRADE_REQUIRED',
+  '426_MESSAGE': 'The client should switch to a different protocol such as TLS/1.0, given in the Upgrade header field.',
+  UPGRADE_REQUIRED: 426,
+  // 428 (RFC 6585) - The origin server requires the request to be conditional.
+  428: 'Precondition Required', // RFC 6585
+  '428_NAME': 'PRECONDITION_REQUIRED',
+  '428_MESSAGE': 'The origin server requires the request to be conditional.',
+  PRECONDITION_REQUIRED: 428,
+  // 429 (RFC 6585) - The user has sent too many requests in a given amount of time.
+  429: 'Too Many Requests',
+  '429_NAME': 'TOO_MANY_REQUESTS',
+  '429_MESSAGE': 'The user has sent too many requests in a given amount of time.',
+  TOO_MANY_REQUESTS: 429,
+  // 431 (RFC 6585) - The server is unwilling to process the request because either an individual header field, or all the header fields collectively, are too large.
+  431: 'Request Header Fields Too Large', // RFC 6585
+  '431_NAME': 'REQUEST_HEADER_FIELDS_TOO_LARGE',
+  '431_MESSAGE': 'The server is unwilling to process the request because either an individual header field, or all the header fields collectively, are too large.',
+  REQUEST_HEADER_FIELDS_TOO_LARGE: 431,
+  // 451 (RFC 7725) - A server operator has received a legal demand to deny access to a resource or to a set of resources that includes the requested resource.
+  451: 'Unavailable For Legal Reasons',
+  '451_NAME': 'UNAVAILABLE_FOR_LEGAL_REASONS',
+  '451_MESSAGE': 'A server operator has received a legal demand to deny access to a resource or to a set of resources that includes the requested resource.',
+  UNAVAILABLE_FOR_LEGAL_REASONS: 451,
+  // ## Server Error 5xx
+
+  // The server failed to fulfill an apparently valid request.
+
+  // 500 - A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.
+  500: 'Internal Server Error',
+  '500_NAME': 'INTERNAL_SERVER_ERROR',
+  '500_MESSAGE': 'A generic error message, given when an unexpected condition was encountered and no more specific message is suitable.',
+  INTERNAL_SERVER_ERROR: 500,
+  // 501 - The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability.
+  501: 'Not Implemented',
+  '501_NAME': 'NOT_IMPLEMENTED',
+  '501_MESSAGE': 'The server either does not recognize the request method, or it lacks the ability to fulfil the request. Usually this implies future availability.',
+  NOT_IMPLEMENTED: 501,
+  // 502 - The server was acting as a gateway or proxy and received an invalid response from the upstream server.
+  502: 'Bad Gateway',
+  '_NAME': 'BAD_GATEWAY',
+  '_MESSAGE': 'The server was acting as a gateway or proxy and received an invalid response from the upstream server.',
+  BAD_GATEWAY: 502,
+  // 503 - The server is currently unavailable (because it is overloaded or down for maintenance). Generally, this is a temporary state.
+  503: 'Service Unavailable',
+  '503_NAME': 'SERVICE_UNAVAILABLE',
+  '503_MESSAGE': 'The server is currently unavailable (because it is overloaded or down for maintenance). Generally, this is a temporary state.',
+  SERVICE_UNAVAILABLE: 503,
+  // 504 - The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.
+  504: 'Gateway Time-out',
+  '504_NAME': 'GATEWAY_TIMEOUT',
+  '504_MESSAGE': 'The server was acting as a gateway or proxy and did not receive a timely response from the upstream server.',
+  GATEWAY_TIMEOUT: 504,
+  // 505 - The server does not support the HTTP protocol version used in the request.
+  505: 'HTTP Version not Supported',
+  '505_NAME': 'HTTP_VERSION_NOT_SUPPORTED',
+  '505_MESSAGE': 'The server does not support the HTTP protocol version used in the request.',
+  HTTP_VERSION_NOT_SUPPORTED: 505,
+  // 506 (RFC 2295) - Transparent content negotiation for the request results in a circular reference.
+  506: 'Variant Also Negotiates',
+  '506_NAME': 'VARIANT_ALSO_NEGOTIATES',
+  '506_MESSAGE': 'Transparent content negotiation for the request results in a circular reference.',
+  VARIANT_ALSO_NEGOTIATES: 506,
+  // 507 (WebDAV; RFC 4918) - The server is unable to store the representation needed to complete the request.
+  507: 'Insufficient Storage',
+  '507_NAME': 'INSUFFICIENT_STORAGE',
+  '507_MESSAGE': 'The server is unable to store the representation needed to complete the request.',
+  INSUFFICIENT_STORAGE: 507,
+  // 508 (WebDAV; RFC 5842) - The server detected an infinite loop while processing the request.
+  508: 'Loop Detected',
+  '508_NAME': 'LOOP_DETECTED',
+  '508_MESSAGE': 'The server detected an infinite loop while processing the request.',
+  LOOP_DETECTED: 508,
+  // 510 (RFC 2774) - Further extensions to the request are required for the server to fulfil it.
+  510: 'Not Extended',
+  '510_NAME': 'NOT_EXTENDED',
+  '510_MESSAGE': 'Further extensions to the request are required for the server to fulfil it.',
+  NOT_EXTENDED: 510,
+  // 511 (RFC 6585) - The client needs to authenticate to gain network access. Intended for use by intercepting proxies used to control access to the network.
+  511: 'Network Authentication Required',
+  '511_NAME': 'NETWORK_AUTHENTICATION_REQUIRED',
+  '511_MESSAGE': 'The client needs to authenticate to gain network access. Intended for use by intercepting proxies used to control access to the network.',
+  NETWORK_AUTHENTICATION_REQUIRED: 511,
+  // ## Extra code
+
+  // Extra HTTP code implemented by vendors and other specifications.
+  extra: {
+    // ### Unofficial codes
+
+    // The following codes are not specified by any standard.
+    unofficial: {
+      // 103 - Used in the resumable requests proposal to resume aborted PUT or POST requests.
+      103: 'Checkpoint',
+      '103_NAME': 'CHECKPOINT',
+      '103_MESSAGE': 'Used in the resumable requests proposal to resume aborted PUT or POST requests.',
+      CHECKPOINT: 103,
+      // 420 (Spring Framework) - A deprecated response used by the Spring Framework when a method has failed.
+      420: 'Method Failure',
+      '420_NAME': 'METHOD_FAILURE',
+      '420_MESSAGE': 'A deprecated response used by the Spring Framework when a method has failed.',
+      METHOD_FAILURE: 420,
+      // 420 (Twitter) - Returned by version 1 of the Twitter Search and Trends API when the client is being rate limited; versions 1.1 and later use the 429 Too Many Requests response code instead.
+      420: 'Enhance Your Calm',
+      '420_NAME': 'ENHANCE_YOUR_CALM',
+      '420_MESSAGE': 'Returned by version 1 of the Twitter Search and Trends API when the client is being rate limited; versions 1.1 and later use the 429 Too Many Requests response code instead.',
+      ENHANCE_YOUR_CALM: 420,
+      // 450 (Microsoft) - The Microsoft extension code indicated when Windows Parental Controls are turned on and are blocking access to the requested webpage.
+      450: 'Blocked by Windows Parental Controls',
+      '450_NAME': 'BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS',
+      '450_MESSAGE': 'The Microsoft extension code indicated when Windows Parental Controls are turned on and are blocking access to the requested webpage.',
+      BLOCKED_BY_WINDOWS_PARENTAL_CONTROLS: 450,
+      // 498 (Esri) - Returned by ArcGIS for Server. Code 498 indicates an expired or otherwise invalid token.
+      498: 'Invalid Token',
+      '498_NAME': 'INVALID_TOKEN',
+      '498_MESSAGE': 'Returned by ArcGIS for Server. Code 498 indicates an expired or otherwise invalid token.',
+      INVALID_TOKEN: 498,
+      // 499 (Esri) - Returned by ArcGIS for Server. Code 499 indicates that a token is required but was not submitted.
+      499: 'Token Required',
+      '499_NAME': 'TOKEN_REQUIRED',
+      '499_MESSAGE': 'Returned by ArcGIS for Server. Code 499 indicates that a token is required but was not submitted.',
+      TOKEN_REQUIRED: 499,
+      // 509 (Apache Web Server/cPanel) - The server has exceeded the bandwidth specified by the server administrator.
+      509: 'Bandwidth Limit Exceeded',
+      '509_NAME': 'BANDWIDTH_LIMIT_EXCEEDED',
+      '509_MESSAGE': 'The server has exceeded the bandwidth specified by the server administrator.',
+      BANDWIDTH_LIMIT_EXCEEDED: 509,
+      // 530 - Used by the Pantheon web platform to indicate a site that has been frozen due to inactivity.
+      530: 'Site is frozen',
+      '530_NAME': 'SITE_IS_FROZEN',
+      '530_MESSAGE': 'Used by the Pantheon web platform to indicate a site that has been frozen due to inactivity.',
+      SITE_IS_FROZEN: 530,
+      // 598 (Informal convention)  - Used by some HTTP proxies to signal a network read timeout behind the proxy to a client in front of the proxy.
+      598: 'Network read timeout error',
+      '598_NAME': 'NETWORK_READ_TIMEOUT_ERROR',
+      '598_MESSAGE': 'Used by some HTTP proxies to signal a network read timeout behind the proxy to a client in front of the proxy.',
+      NETWORK_READ_TIMEOUT_ERROR: 598
+    },
+    // ### Internet Information Services (IIS)
+
+    // Microsoft's Internet Information Services (IIS) web server expands the 4xx error space to signal errors with the client's request.
+    iis: {
+      // 440 - The client's session has expired and must log in again.
+      440: 'Login Time-out',
+      '440_NAME': 'LOGIN_TIME_OUT',
+      '440_MESSAGE': 'The client\'s session has expired and must log in again.',
+      LOGIN_TIME_OUT: 440,
+      // 449 - The server cannot honour the request because the user has not provided the required information.
+      449: 'Retry With',
+      '449_NAME': 'RETRY_WITH',
+      '449_MESSAGE': 'The server cannot honour the request because the user has not provided the required information.',
+      RETRY_WITH: 449,
+      // 451 - Used in Exchange ActiveSync when either a more efficient server is available or the server cannot access the users' mailbox.
+      451: 'Redirect',
+      '451_NAME': 'REDIRECT',
+      '451_MESSAGE': 'Used in Exchange ActiveSync when either a more efficient server is available or the server cannot access the users\' mailbox.',
+      REDIRECT: 451
+    },
+    // ### NGINX
+
+    // The NGINX web server software expands the 4xx error space to signal issues with the client's request.
+    nginx: {
+      // 444 - Used internally to instruct the server to return no information to the client and close the connection immediately.
+      444: 'No Response',
+      '444_NAME': 'NO_RESPONSE',
+      '444_MESSAGE': 'Used internally to instruct the server to return no information to the client and close the connection immediately.',
+      NO_RESPONSE: 444,
+      // 494 - Client sent too large request or too long header line.
+      494: 'Request header too large',
+      '494_NAME': 'REQUEST_HEADER_TOO_LARGE',
+      '494_MESSAGE': 'Client sent too large request or too long header line.',
+      REQUEST_HEADER_TOO_LARGE: 494,
+      // 495 - An expansion of the 400 Bad Request response code, used when the client has provided an invalid client certificate.
+      495: 'SSL Certificate Error',
+      '495_NAME': 'SSL_CERTIFICATE_ERROR',
+      '495_MESSAGE': 'An expansion of the 400 Bad Request response code, used when the client has provided an invalid client certificate.',
+      SSL_CERTIFICATE_ERROR: 495,
+      // 496 - An expansion of the 400 Bad Request response code, used when a client certificate is required but not provided.
+      496: 'SSL Certificate Required',
+      '496_NAME': 'SSL_CERTIFICATE_REQUIRED',
+      '496_MESSAGE': 'An expansion of the 400 Bad Request response code, used when a client certificate is required but not provided.',
+      SSL_CERTIFICATE_REQUIRED: 496,
+      // 497 - An expansion of the 400 Bad Request response code, used when the client has made a HTTP request to a port listening for HTTPS requests.
+      497: 'HTTP Request Sent to HTTPS Port',
+      '497_NAME': 'HTTP_REQUEST_SENT_TO_HTTPS_PORT',
+      '497_MESSAGE': 'An expansion of the 400 Bad Request response code, used when the client has made a HTTP request to a port listening for HTTPS requests.',
+      HTTP_REQUEST_SENT_TO_HTTPS_PORT: 497,
+      // 499 - Used when the client has closed the request before the server could send a response.
+      499: 'Client Closed Request',
+      '499_NAME': 'CLIENT_CLOSED_REQUEST',
+      '499_MESSAGE': 'Used when the client has closed the request before the server could send a response.',
+      CLIENT_CLOSED_REQUEST: 499
+    },
+    // ### Cloudflare
+
+    // Cloudflare's reverse proxy service expands the 5xx series of errors space to signal issues with the origin server.
+    cloudflare: {
+      // 520 - The 520 error is used as a "catch-all response for when the origin server returns something unexpected", listing connection resets, large headers, and empty or invalid responses as common triggers.
+      520: 'Unknown Error',
+      '520_NAME': 'UNKNOWN_ERROR',
+      '520_MESSAGE': 'The 520 error is used as a "catch-all response for when the origin server returns something unexpected", listing connection resets, large headers, and empty or invalid responses as common triggers.',
+      UNKNOWN_ERROR: 520,
+      // 521 - The origin server has refused the connection from Cloudflare.
+      521: 'Web Server Is Down',
+      '521_NAME': 'WEB_SERVER_IS_DOWN',
+      '521_MESSAGE': 'The origin server has refused the connection from Cloudflare.',
+      WEB_SERVER_IS_DOWN: 521,
+      // 522 - Cloudflare could not negotiate a TCP handshake with the origin server.
+      522: 'Connection Timed Out',
+      '522_NAME': 'CONNECTION_TIMED_OUT',
+      '522_MESSAGE': 'Cloudflare could not negotiate a TCP handshake with the origin server.',
+      CONNECTION_TIMED_OUT: 522,
+      // 523 - Cloudflare could not reach the origin server.
+      523: 'Origin Is Unreachable',
+      '523_NAME': 'ORIGIN_IS_UNREACHABLE',
+      '523_MESSAGE': 'Cloudflare could not reach the origin server.',
+      ORIGIN_IS_UNREACHABLE: 523,
+      // 524 - Cloudflare was able to complete a TCP connection to the origin server, but did not receive a timely HTTP response.
+      524: 'A Timeout Occurred',
+      '524_NAME': 'A_TIMEOUT_OCCURRED',
+      '524_MESSAGE': 'Cloudflare was able to complete a TCP connection to the origin server, but did not receive a timely HTTP response.',
+      A_TIMEOUT_OCCURRED: 524,
+      // 525 - Cloudflare could not negotiate a SSL/TLS handshake with the origin server.
+      525: 'SSL Handshake Failed',
+      '525_NAME': 'SSL_HANDSHAKE_FAILED',
+      '525_MESSAGE': 'Cloudflare could not negotiate a SSL/TLS handshake with the origin server.',
+      SSL_HANDSHAKE_FAILED: 525,
+      // 526 - Cloudflare could not validate the SSL/TLS certificate that the origin server presented.
+      526: 'Invalid SSL Certificate',
+      '526_NAME': 'INVALID_SSL_CERTIFICATE',
+      '526_MESSAGE': 'Cloudflare could not validate the SSL/TLS certificate that the origin server presented.',
+      INVALID_SSL_CERTIFICATE: 526,
+      // 527 - Error 527 indicates that the request timed out or failed after the WAN connection had been established.
+      527: 'Railgun Error',
+      '527_NAME': 'RAILGUN_ERROR',
+      '527_MESSAGE': 'Error 527 indicates that the request timed out or failed after the WAN connection had been established.',
+      RAILGUN_ERROR: 527
+    }
+  }
+};
+
+},{}],24:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -2520,7 +3055,7 @@ var ActionStatusType;
 })(ActionStatusType || (ActionStatusType = {}));
 exports.default = ActionStatusType;
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -2539,7 +3074,7 @@ var ActionType;
 })(ActionType || (ActionType = {}));
 exports.default = ActionType;
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 /**
  * credit card authorization factory
@@ -2564,25 +3099,24 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],26:[function(require,module,exports){
+},{"../../actionType":25}],27:[function(require,module,exports){
 "use strict";
 /**
  * メニューアイテム予約オファーに対する承認アクション
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],27:[function(require,module,exports){
+},{}],28:[function(require,module,exports){
 "use strict";
 /**
  * イベントの座席予約オファーに対する承認アクション
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 /**
  * Pecorino口座承認アクションファクトリー
- * @namespace action.authorize.pecorino
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 var actionType_1 = require("../../actionType");
@@ -2603,7 +3137,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],29:[function(require,module,exports){
+},{"../../actionType":25}],30:[function(require,module,exports){
 "use strict";
 /**
  * 注文アクションファクトリー
@@ -2621,7 +3155,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],30:[function(require,module,exports){
+},{"../../actionType":25}],31:[function(require,module,exports){
 "use strict";
 /**
  * 支払アクションファクトリー
@@ -2639,7 +3173,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],31:[function(require,module,exports){
+},{"../../actionType":25}],32:[function(require,module,exports){
 "use strict";
 /**
  * 返金アクションファクトリー
@@ -2659,7 +3193,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],32:[function(require,module,exports){
+},{"../../actionType":25}],33:[function(require,module,exports){
 "use strict";
 /**
  * 印刷アクションファクトリー
@@ -2677,7 +3211,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],33:[function(require,module,exports){
+},{"../../actionType":25}],34:[function(require,module,exports){
 "use strict";
 /**
  * チケット印刷アクションファクトリー
@@ -2690,7 +3224,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../print":32}],34:[function(require,module,exports){
+},{"../print":33}],35:[function(require,module,exports){
 "use strict";
 /**
  * 返却アクションファクトリー
@@ -2708,7 +3242,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],35:[function(require,module,exports){
+},{"../../actionType":25}],36:[function(require,module,exports){
 "use strict";
 /**
  * 注文返品アクションファクトリー
@@ -2728,7 +3262,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../return":34}],36:[function(require,module,exports){
+},{"../return":35}],37:[function(require,module,exports){
 "use strict";
 /**
  * 送信(配送)アクションファクトリー
@@ -2748,7 +3282,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":24}],37:[function(require,module,exports){
+},{"../../actionType":25}],38:[function(require,module,exports){
 "use strict";
 /**
  * Eメール送信アクションファクトリー
@@ -2768,7 +3302,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../send":36}],38:[function(require,module,exports){
+},{"../../send":37}],39:[function(require,module,exports){
 "use strict";
 /**
  * 注文配送アクションファクトリー
@@ -2788,7 +3322,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../send":36}],39:[function(require,module,exports){
+},{"../send":37}],40:[function(require,module,exports){
 "use strict";
 /**
  * アプリケーションクライアントイベントファクトリー
@@ -2798,7 +3332,7 @@ exports.createAttributes = createAttributes;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],40:[function(require,module,exports){
+},{}],41:[function(require,module,exports){
 "use strict";
 /**
  * アプリケーションクライアントユーザーファクトリー
@@ -2806,7 +3340,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],41:[function(require,module,exports){
+},{}],42:[function(require,module,exports){
 "use strict";
 /**
  * 作品タイプ
@@ -2819,7 +3353,7 @@ var CreativeWorkType;
 })(CreativeWorkType || (CreativeWorkType = {}));
 exports.default = CreativeWorkType;
 
-},{}],42:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 /**
  * Eメールメッセージファクトリー
@@ -2866,7 +3400,7 @@ function create(params) {
 }
 exports.create = create;
 
-},{"../../creativeWorkType":41,"../../error/argument":45,"../../error/argumentNull":46,"validator":171}],43:[function(require,module,exports){
+},{"../../creativeWorkType":42,"../../error/argument":46,"../../error/argumentNull":47,"validator":175}],44:[function(require,module,exports){
 "use strict";
 /**
  * エラーコード
@@ -2886,7 +3420,7 @@ var ErrorCode;
 })(ErrorCode || (ErrorCode = {}));
 exports.default = ErrorCode;
 
-},{}],44:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2925,7 +3459,7 @@ var AlreadyInUseError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = AlreadyInUseError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],45:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],46:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -2963,7 +3497,7 @@ var ArgumentError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ArgumentError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],46:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],47:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3001,7 +3535,7 @@ var ArgumentNullError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ArgumentNullError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],47:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],48:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3038,7 +3572,7 @@ var ForbiddenError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ForbiddenError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],48:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],49:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3067,7 +3601,7 @@ var KWSKFSError = /** @class */ (function (_super) {
 }(Error));
 exports.KWSKFSError = KWSKFSError;
 
-},{}],49:[function(require,module,exports){
+},{}],50:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3105,7 +3639,7 @@ var NotFoundError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = NotFoundError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],50:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],51:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3142,7 +3676,7 @@ var NotImplementedError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = NotImplementedError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],51:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],52:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3179,7 +3713,7 @@ var RateLimitExceededError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = RateLimitExceededError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],52:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],53:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3216,7 +3750,7 @@ var ServiceUnavailableError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ServiceUnavailableError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],53:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],54:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3253,7 +3787,7 @@ var UnauthorizedError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = UnauthorizedError;
 
-},{"../errorCode":43,"./kwskfs":48,"setprototypeof":164}],54:[function(require,module,exports){
+},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],55:[function(require,module,exports){
 "use strict";
 /**
  * errors
@@ -3281,7 +3815,7 @@ exports.ServiceUnavailable = serviceUnavailable_1.default;
 var unauthorized_1 = require("./error/unauthorized");
 exports.Unauthorized = unauthorized_1.default;
 
-},{"./error/alreadyInUse":44,"./error/argument":45,"./error/argumentNull":46,"./error/forbidden":47,"./error/kwskfs":48,"./error/notFound":49,"./error/notImplemented":50,"./error/rateLimitExceeded":51,"./error/serviceUnavailable":52,"./error/unauthorized":53}],55:[function(require,module,exports){
+},{"./error/alreadyInUse":45,"./error/argument":46,"./error/argumentNull":47,"./error/forbidden":48,"./error/kwskfs":49,"./error/notFound":50,"./error/notImplemented":51,"./error/rateLimitExceeded":52,"./error/serviceUnavailable":53,"./error/unauthorized":54}],56:[function(require,module,exports){
 "use strict";
 /**
  * イベントステータス
@@ -3296,7 +3830,7 @@ var EventStatusType;
 })(EventStatusType || (EventStatusType = {}));
 exports.default = EventStatusType;
 
-},{}],56:[function(require,module,exports){
+},{}],57:[function(require,module,exports){
 "use strict";
 /**
  * イベントタイプ
@@ -3309,35 +3843,55 @@ var EventType;
 })(EventType || (EventType = {}));
 exports.default = EventType;
 
-},{}],57:[function(require,module,exports){
+},{}],58:[function(require,module,exports){
 "use strict";
 /**
  * フードイベントファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],58:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 /**
  * スポーツイベントファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],59:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
+"use strict";
+/**
+ * 商品在庫状況
+ */
+Object.defineProperty(exports, "__esModule", { value: true });
+var ItemAvailability;
+(function (ItemAvailability) {
+    ItemAvailability["Discontinued"] = "Discontinued";
+    ItemAvailability["InStock"] = "InStock";
+    ItemAvailability["InStoreOnly"] = "InStoreOnly";
+    ItemAvailability["LimitedAvailability"] = "LimitedAvailability";
+    ItemAvailability["OnlineOnly"] = "OnlineOnly";
+    ItemAvailability["OutOfStock"] = "OutOfStock";
+    ItemAvailability["PreOrder"] = "PreOrder";
+    ItemAvailability["PreSale"] = "PreSale";
+    ItemAvailability["SoldOut"] = "SoldOut";
+})(ItemAvailability || (ItemAvailability = {}));
+exports.default = ItemAvailability;
+
+},{}],61:[function(require,module,exports){
 "use strict";
 /**
  * メニューアイテム予約オファーファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],60:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 "use strict";
 /**
  * イベントの座席予約オファーファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],61:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 "use strict";
 /**
  * order factory
@@ -3348,7 +3902,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],62:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 "use strict";
 /**
  * 注文ステータス
@@ -3367,7 +3921,7 @@ var OrderStatus;
 })(OrderStatus || (OrderStatus = {}));
 exports.default = OrderStatus;
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 "use strict";
 /**
  * 企業識別子
@@ -3379,7 +3933,7 @@ var CorporationOrganizationIdentifier;
 })(CorporationOrganizationIdentifier || (CorporationOrganizationIdentifier = {}));
 exports.default = CorporationOrganizationIdentifier;
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 "use strict";
 /**
  * 組織タイプ
@@ -3394,32 +3948,32 @@ var OrganizationType;
 })(OrganizationType || (OrganizationType = {}));
 exports.default = OrganizationType;
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 "use strict";
 /**
  * 企業ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],67:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 "use strict";
 /**
  * スポーツチームファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],68:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
 "use strict";
 /**
  * 所有権ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],69:[function(require,module,exports){
+},{}],71:[function(require,module,exports){
 "use strict";
 /**
  * 決済方法タイプ
@@ -3433,7 +3987,7 @@ var PaymentMethodType;
 })(PaymentMethodType || (PaymentMethodType = {}));
 exports.default = PaymentMethodType;
 
-},{}],70:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 "use strict";
 /**
  * credit card factory
@@ -3480,7 +4034,7 @@ function createUncheckedCardTokenized(params) {
 }
 exports.createUncheckedCardTokenized = createUncheckedCardTokenized;
 
-},{"../../paymentMethodType":69}],71:[function(require,module,exports){
+},{"../../paymentMethodType":71}],73:[function(require,module,exports){
 "use strict";
 /**
  * person factory
@@ -3489,7 +4043,7 @@ exports.createUncheckedCardTokenized = createUncheckedCardTokenized;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],72:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 "use strict";
 /**
  * 人物タイプ
@@ -3501,7 +4055,7 @@ var PersonType;
 })(PersonType || (PersonType = {}));
 exports.default = PersonType;
 
-},{}],73:[function(require,module,exports){
+},{}],75:[function(require,module,exports){
 "use strict";
 /**
  * 場所タイプ
@@ -3516,7 +4070,7 @@ var PlaceType;
 })(PlaceType || (PlaceType = {}));
 exports.default = PlaceType;
 
-},{}],74:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -3530,14 +4084,14 @@ var PriceCurrency;
 })(PriceCurrency || (PriceCurrency = {}));
 exports.default = PriceCurrency;
 
-},{}],75:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 "use strict";
 /**
  * 会員プログラムファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],76:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -3564,7 +4118,7 @@ var ReservationStatusType;
 })(ReservationStatusType || (ReservationStatusType = {}));
 exports.default = ReservationStatusType;
 
-},{}],77:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -3576,14 +4130,14 @@ var ReservationType;
 })(ReservationType || (ReservationType = {}));
 exports.default = ReservationType;
 
-},{}],78:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 "use strict";
 /**
  * イベント予約ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],79:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 "use strict";
 /**
  * タスクファクトリー
@@ -3629,7 +4183,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"./error/argument":45,"./error/argumentNull":46,"lodash":100,"validator":171}],80:[function(require,module,exports){
+},{"./error/argument":46,"./error/argumentNull":47,"lodash":104,"validator":175}],82:[function(require,module,exports){
 "use strict";
 /**
  * タスク実行結果ファクトリー
@@ -3644,7 +4198,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{}],81:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 "use strict";
 /**
  * task name
@@ -3661,6 +4215,10 @@ var TaskName;
      * クレジットカード承認アクション取消
      */
     TaskName["CancelCreditCard"] = "cancelCreditCard";
+    /**
+     * Pecorino口座承認アクション取消
+     */
+    TaskName["CancelPecorino"] = "cancelPecorino";
     /**
      *  Eメールメッセージ送信
      */
@@ -3682,6 +4240,10 @@ var TaskName;
      */
     TaskName["PayPecorino"] = "payPecorino";
     /**
+     * Bluelab支払
+     */
+    TaskName["PayBluelab"] = "payBluelab";
+    /**
      * 注文配送
      */
     TaskName["SendOrder"] = "sendOrder";
@@ -3692,7 +4254,7 @@ var TaskName;
 })(TaskName || (TaskName = {}));
 exports.default = TaskName;
 
-},{}],82:[function(require,module,exports){
+},{}],84:[function(require,module,exports){
 "use strict";
 /**
  * タスクステータス
@@ -3719,7 +4281,7 @@ var TaskStatus;
 })(TaskStatus || (TaskStatus = {}));
 exports.default = TaskStatus;
 
-},{}],83:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード承認解除タスクファクトリー
@@ -3741,7 +4303,25 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],84:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],86:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var TaskFactory = require("../task");
+var taskName_1 = require("../taskName");
+function createAttributes(params) {
+    return TaskFactory.createAttributes(__assign({}, params, { name: taskName_1.default.CancelPecorino }));
+}
+exports.createAttributes = createAttributes;
+
+},{"../task":81,"../taskName":83}],87:[function(require,module,exports){
 "use strict";
 /**
  * 座席予約承認解除タスクファクトリー
@@ -3763,7 +4343,25 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],85:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],88:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var TaskFactory = require("../task");
+var taskName_1 = require("../taskName");
+function createAttributes(params) {
+    return TaskFactory.createAttributes(__assign({}, params, { name: taskName_1.default.PayBluelab }));
+}
+exports.createAttributes = createAttributes;
+
+},{"../task":81,"../taskName":83}],89:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード支払タスクファクトリー
@@ -3785,7 +4383,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],86:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],90:[function(require,module,exports){
 "use strict";
 /**
  * Pecorino支払タスクファクトリー
@@ -3807,7 +4405,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],87:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],91:[function(require,module,exports){
 "use strict";
 /**
  * 注文受付タスクファクトリー
@@ -3829,7 +4427,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],88:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],92:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード返金タスクファクトリー
@@ -3850,7 +4448,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],89:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],93:[function(require,module,exports){
 "use strict";
 /**
  * 注文返品タスクファクトリー
@@ -3871,7 +4469,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],90:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],94:[function(require,module,exports){
 "use strict";
 /**
  * Eメール送信タスクファクトリー
@@ -3893,7 +4491,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],91:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],95:[function(require,module,exports){
 "use strict";
 /**
  * 注文配送タスクファクトリー
@@ -3915,7 +4513,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":79,"../taskName":81}],92:[function(require,module,exports){
+},{"../task":81,"../taskName":83}],96:[function(require,module,exports){
 "use strict";
 /**
  * transaction factory
@@ -3967,7 +4565,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"./error/argument":45,"./error/argumentNull":46,"validator":171}],93:[function(require,module,exports){
+},{"./error/argument":46,"./error/argumentNull":47,"validator":175}],97:[function(require,module,exports){
 "use strict";
 /**
  * 取引ステータス
@@ -3982,7 +4580,7 @@ var TransactionStatusType;
 })(TransactionStatusType || (TransactionStatusType = {}));
 exports.default = TransactionStatusType;
 
-},{}],94:[function(require,module,exports){
+},{}],98:[function(require,module,exports){
 "use strict";
 /**
  * 取引タスクエクスポートステータス
@@ -4005,7 +4603,7 @@ var TransactionTasksExportationStatus;
 })(TransactionTasksExportationStatus || (TransactionTasksExportationStatus = {}));
 exports.default = TransactionTasksExportationStatus;
 
-},{}],95:[function(require,module,exports){
+},{}],99:[function(require,module,exports){
 "use strict";
 /**
  * 取引タイプ
@@ -4024,7 +4622,7 @@ var TransactionType;
 })(TransactionType || (TransactionType = {}));
 exports.default = TransactionType;
 
-},{}],96:[function(require,module,exports){
+},{}],100:[function(require,module,exports){
 "use strict";
 /**
  * 注文取引ファクトリー
@@ -4065,7 +4663,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../transaction":92,"../transactionType":95}],97:[function(require,module,exports){
+},{"../transaction":96,"../transactionType":99}],101:[function(require,module,exports){
 "use strict";
 /**
  * 返品取引ファクトリー
@@ -4120,14 +4718,14 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../transaction":92,"../transactionType":95}],98:[function(require,module,exports){
+},{"../transaction":96,"../transactionType":99}],102:[function(require,module,exports){
 "use strict";
 /**
  * URLファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],99:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -4155,6 +4753,7 @@ var FoodEventFactory = require("./factory/event/food");
 var SportsEventFactory = require("./factory/event/sports");
 var eventStatusType_1 = require("./factory/eventStatusType");
 var eventType_1 = require("./factory/eventType");
+var itemAvailability_1 = require("./factory/itemAvailability");
 var MenuItemEventReservationOfferFactory = require("./factory/offer/eventReservation/menuItem");
 var SeatEventReservationOfferFactory = require("./factory/offer/eventReservation/seat");
 var OrderFactory = require("./factory/order");
@@ -4176,7 +4775,9 @@ var EventReservationFactory = require("./factory/reservation/event");
 var reservationStatusType_1 = require("./factory/reservationStatusType");
 var reservationType_1 = require("./factory/reservationType");
 var CancelCreditCardTaskFactory = require("./factory/task/cancelCreditCard");
+var CancelPecorinoTaskFactory = require("./factory/task/cancelPecorino");
 var CancelSeatReservationTaskFactory = require("./factory/task/cancelSeatReservation");
+var PayBluelabTaskFactory = require("./factory/task/payBluelab");
 var PayCreditCardTaskFactory = require("./factory/task/payCreditCard");
 var PayPecorinoTaskFactory = require("./factory/task/payPecorino");
 var PlaceOrderTaskFactory = require("./factory/task/placeOrder");
@@ -4274,6 +4875,7 @@ var event;
 })(event = exports.event || (exports.event = {}));
 exports.eventStatusType = eventStatusType_1.default;
 exports.eventType = eventType_1.default;
+exports.itemAvailability = itemAvailability_1.default;
 var offer;
 (function (offer) {
     var eventReservation;
@@ -4312,12 +4914,14 @@ exports.reservationType = reservationType_1.default;
 var task;
 (function (task) {
     task.cancelCreditCard = CancelCreditCardTaskFactory;
+    task.cancelPecorino = CancelPecorinoTaskFactory;
     task.cancelSeatReservation = CancelSeatReservationTaskFactory;
     task.placeOrder = PlaceOrderTaskFactory;
     task.refundCreditCard = RefundCreditCardTaskFactory;
     task.returnOrder = ReturnOrderTaskFactory;
     task.sendEmailMessage = SendEmailMessageTaskFactory;
     task.sendOrder = SendOrderTaskFactory;
+    task.payBluelab = PayBluelabTaskFactory;
     task.payCreditCard = PayCreditCardTaskFactory;
     task.payPecorino = PayPecorinoTaskFactory;
 })(task = exports.task || (exports.task = {}));
@@ -4334,7 +4938,7 @@ exports.transactionTasksExportationStatus = transactionTasksExportationStatus_1.
 exports.transactionType = transactionType_1.default;
 exports.url = URLFactory;
 
-},{"./factory/action/authorize/creditCard":25,"./factory/action/authorize/offer/eventReservation/menuItem":26,"./factory/action/authorize/offer/eventReservation/seat":27,"./factory/action/authorize/pecorino":28,"./factory/action/trade/order":29,"./factory/action/trade/pay":30,"./factory/action/trade/refund":31,"./factory/action/transfer/print/ticket":33,"./factory/action/transfer/return/order":35,"./factory/action/transfer/send/message/email":37,"./factory/action/transfer/send/order":38,"./factory/actionStatusType":23,"./factory/actionType":24,"./factory/clientEvent":39,"./factory/clientUser":40,"./factory/creativeWork/message/email":42,"./factory/creativeWorkType":41,"./factory/errorCode":43,"./factory/errors":54,"./factory/event/food":57,"./factory/event/sports":58,"./factory/eventStatusType":55,"./factory/eventType":56,"./factory/offer/eventReservation/menuItem":59,"./factory/offer/eventReservation/seat":60,"./factory/order":61,"./factory/orderStatus":62,"./factory/organization/corporation":65,"./factory/organization/restaurant":66,"./factory/organization/sportsTeam":67,"./factory/organizationIdentifier/corporation":63,"./factory/organizationType":64,"./factory/ownershipInfo":68,"./factory/paymentMethod/paymentCard/creditCard":70,"./factory/paymentMethodType":69,"./factory/person":71,"./factory/personType":72,"./factory/placeType":73,"./factory/priceCurrency":74,"./factory/programMembership":75,"./factory/reservation/event":78,"./factory/reservationStatusType":76,"./factory/reservationType":77,"./factory/task/cancelCreditCard":83,"./factory/task/cancelSeatReservation":84,"./factory/task/payCreditCard":85,"./factory/task/payPecorino":86,"./factory/task/placeOrder":87,"./factory/task/refundCreditCard":88,"./factory/task/returnOrder":89,"./factory/task/sendEmailMessage":90,"./factory/task/sendOrder":91,"./factory/taskExecutionResult":80,"./factory/taskName":81,"./factory/taskStatus":82,"./factory/transaction/placeOrder":96,"./factory/transaction/returnOrder":97,"./factory/transactionStatusType":93,"./factory/transactionTasksExportationStatus":94,"./factory/transactionType":95,"./factory/url":98,"@motionpicture/pecorino-factory":139}],100:[function(require,module,exports){
+},{"./factory/action/authorize/creditCard":26,"./factory/action/authorize/offer/eventReservation/menuItem":27,"./factory/action/authorize/offer/eventReservation/seat":28,"./factory/action/authorize/pecorino":29,"./factory/action/trade/order":30,"./factory/action/trade/pay":31,"./factory/action/trade/refund":32,"./factory/action/transfer/print/ticket":34,"./factory/action/transfer/return/order":36,"./factory/action/transfer/send/message/email":38,"./factory/action/transfer/send/order":39,"./factory/actionStatusType":24,"./factory/actionType":25,"./factory/clientEvent":40,"./factory/clientUser":41,"./factory/creativeWork/message/email":43,"./factory/creativeWorkType":42,"./factory/errorCode":44,"./factory/errors":55,"./factory/event/food":58,"./factory/event/sports":59,"./factory/eventStatusType":56,"./factory/eventType":57,"./factory/itemAvailability":60,"./factory/offer/eventReservation/menuItem":61,"./factory/offer/eventReservation/seat":62,"./factory/order":63,"./factory/orderStatus":64,"./factory/organization/corporation":67,"./factory/organization/restaurant":68,"./factory/organization/sportsTeam":69,"./factory/organizationIdentifier/corporation":65,"./factory/organizationType":66,"./factory/ownershipInfo":70,"./factory/paymentMethod/paymentCard/creditCard":72,"./factory/paymentMethodType":71,"./factory/person":73,"./factory/personType":74,"./factory/placeType":75,"./factory/priceCurrency":76,"./factory/programMembership":77,"./factory/reservation/event":80,"./factory/reservationStatusType":78,"./factory/reservationType":79,"./factory/task/cancelCreditCard":85,"./factory/task/cancelPecorino":86,"./factory/task/cancelSeatReservation":87,"./factory/task/payBluelab":88,"./factory/task/payCreditCard":89,"./factory/task/payPecorino":90,"./factory/task/placeOrder":91,"./factory/task/refundCreditCard":92,"./factory/task/returnOrder":93,"./factory/task/sendEmailMessage":94,"./factory/task/sendOrder":95,"./factory/taskExecutionResult":82,"./factory/taskName":83,"./factory/taskStatus":84,"./factory/transaction/placeOrder":100,"./factory/transaction/returnOrder":101,"./factory/transactionStatusType":97,"./factory/transactionTasksExportationStatus":98,"./factory/transactionType":99,"./factory/url":102,"@motionpicture/pecorino-factory":143}],104:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -21443,7 +22047,7 @@ exports.url = URLFactory;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],101:[function(require,module,exports){
+},{}],105:[function(require,module,exports){
 "use strict";
 /**
  * 口座ファクトリー
@@ -21457,7 +22061,7 @@ var AccountType;
     AccountType["Account"] = "Account";
 })(AccountType = exports.AccountType || (exports.AccountType = {}));
 
-},{}],102:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -21470,9 +22074,9 @@ var AccountStatusType;
 })(AccountStatusType || (AccountStatusType = {}));
 exports.default = AccountStatusType;
 
-},{}],103:[function(require,module,exports){
-arguments[4][23][0].apply(exports,arguments)
-},{"dup":23}],104:[function(require,module,exports){
+},{}],107:[function(require,module,exports){
+arguments[4][24][0].apply(exports,arguments)
+},{"dup":24}],108:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -21493,36 +22097,15 @@ var ActionType;
 })(ActionType || (ActionType = {}));
 exports.default = ActionType;
 
-},{}],105:[function(require,module,exports){
-"use strict";
-/**
- * 貨幣転送アクションファクトリー
- */
-Object.defineProperty(exports, "__esModule", { value: true });
-var actionType_1 = require("../../actionType");
-function createAttributes(params) {
-    return {
-        typeOf: actionType_1.default.MoneyTransfer,
-        result: params.result,
-        object: params.object,
-        agent: params.agent,
-        recipient: params.recipient,
-        potentialActions: params.potentialActions,
-        purpose: params.purpose,
-        amount: params.amount,
-        fromLocation: params.fromLocation,
-        toLocation: params.toLocation
-    };
-}
-exports.createAttributes = createAttributes;
-
-},{"../../actionType":104}],106:[function(require,module,exports){
-arguments[4][36][0].apply(exports,arguments)
-},{"../../actionType":104,"dup":36}],107:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
+arguments[4][68][0].apply(exports,arguments)
+},{"dup":68}],110:[function(require,module,exports){
 arguments[4][37][0].apply(exports,arguments)
-},{"../../send":106,"dup":37}],108:[function(require,module,exports){
-arguments[4][40][0].apply(exports,arguments)
-},{"dup":40}],109:[function(require,module,exports){
+},{"../../actionType":108,"dup":37}],111:[function(require,module,exports){
+arguments[4][38][0].apply(exports,arguments)
+},{"../../send":110,"dup":38}],112:[function(require,module,exports){
+arguments[4][41][0].apply(exports,arguments)
+},{"dup":41}],113:[function(require,module,exports){
 "use strict";
 /**
  * 作品タイプ
@@ -21534,11 +22117,11 @@ var CreativeWorkType;
 })(CreativeWorkType || (CreativeWorkType = {}));
 exports.default = CreativeWorkType;
 
-},{}],110:[function(require,module,exports){
-arguments[4][42][0].apply(exports,arguments)
-},{"../../creativeWorkType":109,"../../error/argument":113,"../../error/argumentNull":114,"dup":42,"validator":171}],111:[function(require,module,exports){
+},{}],114:[function(require,module,exports){
 arguments[4][43][0].apply(exports,arguments)
-},{"dup":43}],112:[function(require,module,exports){
+},{"../../creativeWorkType":113,"../../error/argument":117,"../../error/argumentNull":118,"dup":43,"validator":175}],115:[function(require,module,exports){
+arguments[4][44][0].apply(exports,arguments)
+},{"dup":44}],116:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21576,7 +22159,7 @@ var AlreadyInUseError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = AlreadyInUseError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],113:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],117:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21613,7 +22196,7 @@ var ArgumentError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ArgumentError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],114:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],118:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21650,7 +22233,7 @@ var ArgumentNullError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ArgumentNullError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],115:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],119:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21686,7 +22269,7 @@ var ForbiddenError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ForbiddenError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],116:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],120:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21723,7 +22306,7 @@ var NotFoundError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = NotFoundError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],117:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],121:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21759,7 +22342,7 @@ var NotImplementedError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = NotImplementedError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],118:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],122:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21788,7 +22371,7 @@ var PecorinoError = /** @class */ (function (_super) {
 }(Error));
 exports.PecorinoError = PecorinoError;
 
-},{}],119:[function(require,module,exports){
+},{}],123:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21824,7 +22407,7 @@ var RateLimitExceededError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = RateLimitExceededError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],120:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],124:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21860,7 +22443,7 @@ var ServiceUnavailableError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ServiceUnavailableError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],121:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],125:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -21896,7 +22479,7 @@ var UnauthorizedError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = UnauthorizedError;
 
-},{"../errorCode":111,"./pecorino":118,"setprototypeof":164}],122:[function(require,module,exports){
+},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],126:[function(require,module,exports){
 "use strict";
 /**
  * errors
@@ -21924,7 +22507,7 @@ exports.ServiceUnavailable = serviceUnavailable_1.default;
 var unauthorized_1 = require("./error/unauthorized");
 exports.Unauthorized = unauthorized_1.default;
 
-},{"./error/alreadyInUse":112,"./error/argument":113,"./error/argumentNull":114,"./error/forbidden":115,"./error/notFound":116,"./error/notImplemented":117,"./error/pecorino":118,"./error/rateLimitExceeded":119,"./error/serviceUnavailable":120,"./error/unauthorized":121}],123:[function(require,module,exports){
+},{"./error/alreadyInUse":116,"./error/argument":117,"./error/argumentNull":118,"./error/forbidden":119,"./error/notFound":120,"./error/notImplemented":121,"./error/pecorino":122,"./error/rateLimitExceeded":123,"./error/serviceUnavailable":124,"./error/unauthorized":125}],127:[function(require,module,exports){
 "use strict";
 /**
  * 組織タイプ
@@ -21936,15 +22519,15 @@ var OrganizationType;
 })(OrganizationType || (OrganizationType = {}));
 exports.default = OrganizationType;
 
-},{}],124:[function(require,module,exports){
-arguments[4][72][0].apply(exports,arguments)
-},{"dup":72}],125:[function(require,module,exports){
+},{}],128:[function(require,module,exports){
 arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],126:[function(require,module,exports){
-arguments[4][79][0].apply(exports,arguments)
-},{"./error/argument":113,"./error/argumentNull":114,"dup":79,"lodash":140,"validator":171}],127:[function(require,module,exports){
-arguments[4][80][0].apply(exports,arguments)
-},{"dup":80}],128:[function(require,module,exports){
+},{"dup":74}],129:[function(require,module,exports){
+arguments[4][76][0].apply(exports,arguments)
+},{"dup":76}],130:[function(require,module,exports){
+arguments[4][81][0].apply(exports,arguments)
+},{"./error/argument":117,"./error/argumentNull":118,"dup":81,"lodash":144,"validator":175}],131:[function(require,module,exports){
+arguments[4][82][0].apply(exports,arguments)
+},{"dup":82}],132:[function(require,module,exports){
 "use strict";
 /**
  * タスク名
@@ -21963,9 +22546,9 @@ var TaskName;
 })(TaskName || (TaskName = {}));
 exports.default = TaskName;
 
-},{}],129:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"dup":82}],130:[function(require,module,exports){
+},{}],133:[function(require,module,exports){
+arguments[4][84][0].apply(exports,arguments)
+},{"dup":84}],134:[function(require,module,exports){
 "use strict";
 /**
  * 現金転送中止タスクファクトリー
@@ -21987,7 +22570,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":126,"../taskName":128}],131:[function(require,module,exports){
+},{"../task":130,"../taskName":132}],135:[function(require,module,exports){
 "use strict";
 /**
  * 現金転送タスクファクトリー
@@ -22009,11 +22592,11 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":126,"../taskName":128}],132:[function(require,module,exports){
-arguments[4][93][0].apply(exports,arguments)
-},{"dup":93}],133:[function(require,module,exports){
-arguments[4][94][0].apply(exports,arguments)
-},{"dup":94}],134:[function(require,module,exports){
+},{"../task":130,"../taskName":132}],136:[function(require,module,exports){
+arguments[4][97][0].apply(exports,arguments)
+},{"dup":97}],137:[function(require,module,exports){
+arguments[4][98][0].apply(exports,arguments)
+},{"dup":98}],138:[function(require,module,exports){
 "use strict";
 /**
  * 取引タイプ
@@ -22036,30 +22619,30 @@ var TransactionType;
 })(TransactionType || (TransactionType = {}));
 exports.default = TransactionType;
 
-},{}],135:[function(require,module,exports){
+},{}],139:[function(require,module,exports){
 "use strict";
 /**
  * 入金取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],136:[function(require,module,exports){
+},{}],140:[function(require,module,exports){
 "use strict";
 /**
  * 支払取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],137:[function(require,module,exports){
+},{}],141:[function(require,module,exports){
 "use strict";
 /**
  * 転送取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],138:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"dup":98}],139:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
+arguments[4][102][0].apply(exports,arguments)
+},{"dup":102}],143:[function(require,module,exports){
 "use strict";
 /**
  * pecorino-factory
@@ -22143,9 +22726,9 @@ exports.transactionTasksExportationStatus = transactionTasksExportationStatus_1.
 exports.transactionType = transactionType_1.default;
 exports.url = URLFactory;
 
-},{"./factory/account":101,"./factory/accountStatusType":102,"./factory/action/transfer/moneyTransfer":105,"./factory/action/transfer/send/message/email":107,"./factory/actionStatusType":103,"./factory/actionType":104,"./factory/clientUser":108,"./factory/creativeWork/message/email":110,"./factory/creativeWorkType":109,"./factory/errorCode":111,"./factory/errors":122,"./factory/organizationType":123,"./factory/personType":124,"./factory/priceCurrency":125,"./factory/task/cancelMoneyTransfer":130,"./factory/task/moneyTransfer":131,"./factory/taskExecutionResult":127,"./factory/taskName":128,"./factory/taskStatus":129,"./factory/transaction/deposit":135,"./factory/transaction/pay":136,"./factory/transaction/transfer":137,"./factory/transactionStatusType":132,"./factory/transactionTasksExportationStatus":133,"./factory/transactionType":134,"./factory/url":138}],140:[function(require,module,exports){
-arguments[4][100][0].apply(exports,arguments)
-},{"dup":100}],141:[function(require,module,exports){
+},{"./factory/account":105,"./factory/accountStatusType":106,"./factory/action/transfer/moneyTransfer":109,"./factory/action/transfer/send/message/email":111,"./factory/actionStatusType":107,"./factory/actionType":108,"./factory/clientUser":112,"./factory/creativeWork/message/email":114,"./factory/creativeWorkType":113,"./factory/errorCode":115,"./factory/errors":126,"./factory/organizationType":127,"./factory/personType":128,"./factory/priceCurrency":129,"./factory/task/cancelMoneyTransfer":134,"./factory/task/moneyTransfer":135,"./factory/taskExecutionResult":131,"./factory/taskName":132,"./factory/taskStatus":133,"./factory/transaction/deposit":139,"./factory/transaction/pay":140,"./factory/transaction/transfer":141,"./factory/transactionStatusType":136,"./factory/transactionTasksExportationStatus":137,"./factory/transactionType":138,"./factory/url":142}],144:[function(require,module,exports){
+arguments[4][104][0].apply(exports,arguments)
+},{"dup":104}],145:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -22261,7 +22844,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],142:[function(require,module,exports){
+},{}],146:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -22426,7 +23009,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],143:[function(require,module,exports){
+},{}],147:[function(require,module,exports){
 ;(function (root, factory) {
 	if (typeof exports === "object") {
 		// CommonJS
@@ -23187,7 +23770,7 @@ Emitter.prototype.hasListeners = function(event){
 	return CryptoJS;
 
 }));
-},{}],144:[function(require,module,exports){
+},{}],148:[function(require,module,exports){
 ;(function (root, factory) {
 	if (typeof exports === "object") {
 		// CommonJS
@@ -23387,7 +23970,7 @@ Emitter.prototype.hasListeners = function(event){
 	return CryptoJS.SHA256;
 
 }));
-},{"./core":143}],145:[function(require,module,exports){
+},{"./core":147}],149:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -23586,7 +24169,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":146,"_process":158}],146:[function(require,module,exports){
+},{"./debug":150,"_process":162}],150:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -23813,7 +24396,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":157}],147:[function(require,module,exports){
+},{"ms":161}],151:[function(require,module,exports){
 // Generated by CoffeeScript 1.10.0
 module.exports = {
   100: 'Continue',
@@ -23938,7 +24521,7 @@ module.exports = {
   NETWORK_AUTHENTICATION_REQUIRED: 511
 };
 
-},{}],148:[function(require,module,exports){
+},{}],152:[function(require,module,exports){
 (function (name, context, definition) {
   if (typeof module !== 'undefined' && module.exports) module.exports = definition();
   else if (typeof define === 'function' && define.amd) define(definition);
@@ -23978,7 +24561,7 @@ module.exports = {
 
 });
 
-},{}],149:[function(require,module,exports){
+},{}],153:[function(require,module,exports){
 var base64 = require('base64-js');
 
 function padding(str) {
@@ -24051,7 +24634,7 @@ module.exports = {
   decodeToHEX: decodeToHEX
 };
 
-},{"base64-js":141}],150:[function(require,module,exports){
+},{"base64-js":145}],154:[function(require,module,exports){
 function DummyCache() {}
 
 DummyCache.prototype.get = function () {
@@ -24067,7 +24650,7 @@ DummyCache.prototype.set = function () {
 
 module.exports = DummyCache;
 
-},{}],151:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 function ConfigurationError(message) {
   this.name = 'ConfigurationError';
   this.message = (message || '');
@@ -24085,7 +24668,7 @@ module.exports = {
   TokenValidationError: TokenValidationError
 };
 
-},{}],152:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 var urljoin = require('url-join');
 var base64 = require('./base64');
 var request = require('superagent');
@@ -24131,7 +24714,7 @@ module.exports = {
   getJWKS: getJWKS
 };
 
-},{"./base64":149,"superagent":166,"url-join":148}],153:[function(require,module,exports){
+},{"./base64":153,"superagent":170,"url-join":152}],157:[function(require,module,exports){
 /*
 Based on the work of Tom Wu
 http://www-cs-students.stanford.edu/~tjw/jsbn/
@@ -24210,7 +24793,7 @@ RSAVerifier.prototype.verify = function (msg, encsig) {
 
 module.exports = RSAVerifier;
 
-},{"crypto-js/sha256":144,"jsbn":156}],154:[function(require,module,exports){
+},{"crypto-js/sha256":148,"jsbn":160}],158:[function(require,module,exports){
 var RSAVerifier = require('./helpers/rsa-verifier');
 var base64 = require('./helpers/base64');
 var jwks = require('./helpers/jwks');
@@ -24460,7 +25043,7 @@ IdTokenVerifier.prototype.decode = function (token) {
 
 module.exports = IdTokenVerifier;
 
-},{"./helpers/base64":149,"./helpers/dummy-cache":150,"./helpers/error":151,"./helpers/jwks":152,"./helpers/rsa-verifier":153}],155:[function(require,module,exports){
+},{"./helpers/base64":153,"./helpers/dummy-cache":154,"./helpers/error":155,"./helpers/jwks":156,"./helpers/rsa-verifier":157}],159:[function(require,module,exports){
 // the whatwg-fetch polyfill installs the fetch() function
 // on the global object (window or self)
 //
@@ -24468,7 +25051,7 @@ module.exports = IdTokenVerifier;
 require('whatwg-fetch');
 module.exports = self.fetch.bind(self);
 
-},{"whatwg-fetch":242}],156:[function(require,module,exports){
+},{"whatwg-fetch":246}],160:[function(require,module,exports){
 (function(){
 
     // Copyright (c) 2005  Tom Wu
@@ -25827,7 +26410,7 @@ module.exports = self.fetch.bind(self);
 
 }).call(this);
 
-},{}],157:[function(require,module,exports){
+},{}],161:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -25981,7 +26564,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],158:[function(require,module,exports){
+},{}],162:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -26167,7 +26750,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],159:[function(require,module,exports){
+},{}],163:[function(require,module,exports){
 'use strict';
 
 var replace = String.prototype.replace;
@@ -26187,7 +26770,7 @@ module.exports = {
     RFC3986: 'RFC3986'
 };
 
-},{}],160:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 'use strict';
 
 var stringify = require('./stringify');
@@ -26200,7 +26783,7 @@ module.exports = {
     stringify: stringify
 };
 
-},{"./formats":159,"./parse":161,"./stringify":162}],161:[function(require,module,exports){
+},{"./formats":163,"./parse":165,"./stringify":166}],165:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -26376,7 +26959,7 @@ module.exports = function (str, opts) {
     return utils.compact(obj);
 };
 
-},{"./utils":163}],162:[function(require,module,exports){
+},{"./utils":167}],166:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -26588,7 +27171,7 @@ module.exports = function (object, opts) {
     return joined.length > 0 ? prefix + joined : '';
 };
 
-},{"./formats":159,"./utils":163}],163:[function(require,module,exports){
+},{"./formats":163,"./utils":167}],167:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty;
@@ -26792,7 +27375,7 @@ exports.isBuffer = function isBuffer(obj) {
     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
 };
 
-},{}],164:[function(require,module,exports){
+},{}],168:[function(require,module,exports){
 module.exports = Object.setPrototypeOf || ({__proto__:[]} instanceof Array ? setProtoOf : mixinProperties);
 
 function setProtoOf(obj, proto) {
@@ -26809,7 +27392,7 @@ function mixinProperties(obj, proto) {
 	return obj;
 }
 
-},{}],165:[function(require,module,exports){
+},{}],169:[function(require,module,exports){
 function Agent() {
   this._defaults = [];
 }
@@ -26831,7 +27414,7 @@ Agent.prototype._setDefaults = function(req) {
 
 module.exports = Agent;
 
-},{}],166:[function(require,module,exports){
+},{}],170:[function(require,module,exports){
 /**
  * Root reference for iframes.
  */
@@ -27753,7 +28336,7 @@ request.put = function(url, data, fn) {
   return req;
 };
 
-},{"./agent-base":165,"./is-object":167,"./request-base":168,"./response-base":169,"component-emitter":142}],167:[function(require,module,exports){
+},{"./agent-base":169,"./is-object":171,"./request-base":172,"./response-base":173,"component-emitter":146}],171:[function(require,module,exports){
 'use strict';
 
 /**
@@ -27770,7 +28353,7 @@ function isObject(obj) {
 
 module.exports = isObject;
 
-},{}],168:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 'use strict';
 
 /**
@@ -28466,7 +29049,7 @@ RequestBase.prototype._setTimeouts = function() {
   }
 };
 
-},{"./is-object":167}],169:[function(require,module,exports){
+},{"./is-object":171}],173:[function(require,module,exports){
 'use strict';
 
 /**
@@ -28602,7 +29185,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
     this.notFound = 404 == status;
 };
 
-},{"./utils":170}],170:[function(require,module,exports){
+},{"./utils":174}],174:[function(require,module,exports){
 'use strict';
 
 /**
@@ -28675,7 +29258,7 @@ exports.cleanHeader = function(header, changesOrigin){
   return header;
 };
 
-},{}],171:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29027,7 +29610,7 @@ var validator = {
 
 exports.default = validator;
 module.exports = exports['default'];
-},{"./lib/blacklist":173,"./lib/contains":174,"./lib/equals":175,"./lib/escape":176,"./lib/isAfter":177,"./lib/isAlpha":178,"./lib/isAlphanumeric":179,"./lib/isAscii":180,"./lib/isBase64":181,"./lib/isBefore":182,"./lib/isBoolean":183,"./lib/isByteLength":184,"./lib/isCreditCard":185,"./lib/isCurrency":186,"./lib/isDataURI":187,"./lib/isDecimal":188,"./lib/isDivisibleBy":189,"./lib/isEmail":190,"./lib/isEmpty":191,"./lib/isFQDN":192,"./lib/isFloat":193,"./lib/isFullWidth":194,"./lib/isHalfWidth":195,"./lib/isHash":196,"./lib/isHexColor":197,"./lib/isHexadecimal":198,"./lib/isIP":199,"./lib/isISBN":200,"./lib/isISIN":201,"./lib/isISO31661Alpha2":202,"./lib/isISO8601":203,"./lib/isISRC":204,"./lib/isISSN":205,"./lib/isIn":206,"./lib/isInt":207,"./lib/isJSON":208,"./lib/isLatLong":209,"./lib/isLength":210,"./lib/isLowercase":211,"./lib/isMACAddress":212,"./lib/isMD5":213,"./lib/isMimeType":214,"./lib/isMobilePhone":215,"./lib/isMongoId":216,"./lib/isMultibyte":217,"./lib/isNumeric":218,"./lib/isPort":219,"./lib/isPostalCode":220,"./lib/isSurrogatePair":221,"./lib/isURL":222,"./lib/isUUID":223,"./lib/isUppercase":224,"./lib/isVariableWidth":225,"./lib/isWhitelisted":226,"./lib/ltrim":227,"./lib/matches":228,"./lib/normalizeEmail":229,"./lib/rtrim":230,"./lib/stripLow":231,"./lib/toBoolean":232,"./lib/toDate":233,"./lib/toFloat":234,"./lib/toInt":235,"./lib/trim":236,"./lib/unescape":237,"./lib/util/toString":240,"./lib/whitelist":241}],172:[function(require,module,exports){
+},{"./lib/blacklist":177,"./lib/contains":178,"./lib/equals":179,"./lib/escape":180,"./lib/isAfter":181,"./lib/isAlpha":182,"./lib/isAlphanumeric":183,"./lib/isAscii":184,"./lib/isBase64":185,"./lib/isBefore":186,"./lib/isBoolean":187,"./lib/isByteLength":188,"./lib/isCreditCard":189,"./lib/isCurrency":190,"./lib/isDataURI":191,"./lib/isDecimal":192,"./lib/isDivisibleBy":193,"./lib/isEmail":194,"./lib/isEmpty":195,"./lib/isFQDN":196,"./lib/isFloat":197,"./lib/isFullWidth":198,"./lib/isHalfWidth":199,"./lib/isHash":200,"./lib/isHexColor":201,"./lib/isHexadecimal":202,"./lib/isIP":203,"./lib/isISBN":204,"./lib/isISIN":205,"./lib/isISO31661Alpha2":206,"./lib/isISO8601":207,"./lib/isISRC":208,"./lib/isISSN":209,"./lib/isIn":210,"./lib/isInt":211,"./lib/isJSON":212,"./lib/isLatLong":213,"./lib/isLength":214,"./lib/isLowercase":215,"./lib/isMACAddress":216,"./lib/isMD5":217,"./lib/isMimeType":218,"./lib/isMobilePhone":219,"./lib/isMongoId":220,"./lib/isMultibyte":221,"./lib/isNumeric":222,"./lib/isPort":223,"./lib/isPostalCode":224,"./lib/isSurrogatePair":225,"./lib/isURL":226,"./lib/isUUID":227,"./lib/isUppercase":228,"./lib/isVariableWidth":229,"./lib/isWhitelisted":230,"./lib/ltrim":231,"./lib/matches":232,"./lib/normalizeEmail":233,"./lib/rtrim":234,"./lib/stripLow":235,"./lib/toBoolean":236,"./lib/toDate":237,"./lib/toFloat":238,"./lib/toInt":239,"./lib/trim":240,"./lib/unescape":241,"./lib/util/toString":244,"./lib/whitelist":245}],176:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29124,7 +29707,7 @@ for (var _i3 = 0; _i3 < commaDecimal.length; _i3++) {
 alpha['pt-BR'] = alpha['pt-PT'];
 alphanumeric['pt-BR'] = alphanumeric['pt-PT'];
 decimal['pt-BR'] = decimal['pt-PT'];
-},{}],173:[function(require,module,exports){
+},{}],177:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29143,7 +29726,7 @@ function blacklist(str, chars) {
   return str.replace(new RegExp('[' + chars + ']+', 'g'), '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],174:[function(require,module,exports){
+},{"./util/assertString":242}],178:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29166,7 +29749,7 @@ function contains(str, elem) {
   return str.indexOf((0, _toString2.default)(elem)) >= 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238,"./util/toString":240}],175:[function(require,module,exports){
+},{"./util/assertString":242,"./util/toString":244}],179:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29185,7 +29768,7 @@ function equals(str, comparison) {
   return str === comparison;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],176:[function(require,module,exports){
+},{"./util/assertString":242}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29204,7 +29787,7 @@ function escape(str) {
   return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\//g, '&#x2F;').replace(/\\/g, '&#x5C;').replace(/`/g, '&#96;');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],177:[function(require,module,exports){
+},{"./util/assertString":242}],181:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29231,7 +29814,7 @@ function isAfter(str) {
   return !!(original && comparison && original > comparison);
 }
 module.exports = exports['default'];
-},{"./toDate":233,"./util/assertString":238}],178:[function(require,module,exports){
+},{"./toDate":237,"./util/assertString":242}],182:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29257,7 +29840,7 @@ function isAlpha(str) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":172,"./util/assertString":238}],179:[function(require,module,exports){
+},{"./alpha":176,"./util/assertString":242}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29283,7 +29866,7 @@ function isAlphanumeric(str) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":172,"./util/assertString":238}],180:[function(require,module,exports){
+},{"./alpha":176,"./util/assertString":242}],184:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29306,7 +29889,7 @@ function isAscii(str) {
   return ascii.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],181:[function(require,module,exports){
+},{"./util/assertString":242}],185:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29332,7 +29915,7 @@ function isBase64(str) {
   return firstPaddingChar === -1 || firstPaddingChar === len - 1 || firstPaddingChar === len - 2 && str[len - 1] === '=';
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],182:[function(require,module,exports){
+},{"./util/assertString":242}],186:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29359,7 +29942,7 @@ function isBefore(str) {
   return !!(original && comparison && original < comparison);
 }
 module.exports = exports['default'];
-},{"./toDate":233,"./util/assertString":238}],183:[function(require,module,exports){
+},{"./toDate":237,"./util/assertString":242}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29378,7 +29961,7 @@ function isBoolean(str) {
   return ['true', 'false', '1', '0'].indexOf(str) >= 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],184:[function(require,module,exports){
+},{"./util/assertString":242}],188:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29412,7 +29995,7 @@ function isByteLength(str, options) {
   return len >= min && (typeof max === 'undefined' || len <= max);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],185:[function(require,module,exports){
+},{"./util/assertString":242}],189:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29458,7 +30041,7 @@ function isCreditCard(str) {
   return !!(sum % 10 === 0 ? sanitized : false);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],186:[function(require,module,exports){
+},{"./util/assertString":242}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29551,7 +30134,7 @@ function isCurrency(str, options) {
   return currencyRegex(options).test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238,"./util/merge":239}],187:[function(require,module,exports){
+},{"./util/assertString":242,"./util/merge":243}],191:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29601,7 +30184,7 @@ function isDataURI(str) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],188:[function(require,module,exports){
+},{"./util/assertString":242}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29643,7 +30226,7 @@ function isDecimal(str, options) {
   throw new Error('Invalid locale \'' + options.locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":172,"./util/assertString":238,"./util/merge":239}],189:[function(require,module,exports){
+},{"./alpha":176,"./util/assertString":242,"./util/merge":243}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29666,7 +30249,7 @@ function isDivisibleBy(str, num) {
   return (0, _toFloat2.default)(str) % parseInt(num, 10) === 0;
 }
 module.exports = exports['default'];
-},{"./toFloat":234,"./util/assertString":238}],190:[function(require,module,exports){
+},{"./toFloat":238,"./util/assertString":242}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29756,7 +30339,7 @@ function isEmail(str, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./isByteLength":184,"./isFQDN":192,"./util/assertString":238,"./util/merge":239}],191:[function(require,module,exports){
+},{"./isByteLength":188,"./isFQDN":196,"./util/assertString":242,"./util/merge":243}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29775,7 +30358,7 @@ function isEmpty(str) {
   return str.length === 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],192:[function(require,module,exports){
+},{"./util/assertString":242}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29837,7 +30420,7 @@ function isFQDN(str, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238,"./util/merge":239}],193:[function(require,module,exports){
+},{"./util/assertString":242,"./util/merge":243}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29863,7 +30446,7 @@ function isFloat(str, options) {
   return float.test(str) && (!options.hasOwnProperty('min') || str >= options.min) && (!options.hasOwnProperty('max') || str <= options.max) && (!options.hasOwnProperty('lt') || str < options.lt) && (!options.hasOwnProperty('gt') || str > options.gt);
 }
 module.exports = exports['default'];
-},{"./alpha":172,"./util/assertString":238}],194:[function(require,module,exports){
+},{"./alpha":176,"./util/assertString":242}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29884,7 +30467,7 @@ function isFullWidth(str) {
   (0, _assertString2.default)(str);
   return fullWidth.test(str);
 }
-},{"./util/assertString":238}],195:[function(require,module,exports){
+},{"./util/assertString":242}],199:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29905,7 +30488,7 @@ function isHalfWidth(str) {
   (0, _assertString2.default)(str);
   return halfWidth.test(str);
 }
-},{"./util/assertString":238}],196:[function(require,module,exports){
+},{"./util/assertString":242}],200:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29941,7 +30524,7 @@ function isHash(str, algorithm) {
   return hash.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],197:[function(require,module,exports){
+},{"./util/assertString":242}],201:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29962,7 +30545,7 @@ function isHexColor(str) {
   return hexcolor.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],198:[function(require,module,exports){
+},{"./util/assertString":242}],202:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29983,7 +30566,7 @@ function isHexadecimal(str) {
   return hexadecimal.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],199:[function(require,module,exports){
+},{"./util/assertString":242}],203:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30065,7 +30648,7 @@ function isIP(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],200:[function(require,module,exports){
+},{"./util/assertString":242}],204:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30123,7 +30706,7 @@ function isISBN(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],201:[function(require,module,exports){
+},{"./util/assertString":242}],205:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30172,7 +30755,7 @@ function isISIN(str) {
   return parseInt(str.substr(str.length - 1), 10) === (10000 - sum) % 10;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],202:[function(require,module,exports){
+},{"./util/assertString":242}],206:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30194,7 +30777,7 @@ function isISO31661Alpha2(str) {
   return validISO31661Alpha2CountriesCodes.includes(str.toUpperCase());
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],203:[function(require,module,exports){
+},{"./util/assertString":242}],207:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30218,7 +30801,7 @@ function isISO8601(str) {
   return iso8601.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],204:[function(require,module,exports){
+},{"./util/assertString":242}],208:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30240,7 +30823,7 @@ function isISRC(str) {
   return isrc.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],205:[function(require,module,exports){
+},{"./util/assertString":242}],209:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30299,7 +30882,7 @@ function isISSN(str) {
   return checksum % 11 === 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],206:[function(require,module,exports){
+},{"./util/assertString":242}],210:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30339,7 +30922,7 @@ function isIn(str, options) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238,"./util/toString":240}],207:[function(require,module,exports){
+},{"./util/assertString":242,"./util/toString":244}],211:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30373,7 +30956,7 @@ function isInt(str, options) {
   return regex.test(str) && minCheckPassed && maxCheckPassed && ltCheckPassed && gtCheckPassed;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],208:[function(require,module,exports){
+},{"./util/assertString":242}],212:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30399,7 +30982,7 @@ function isJSON(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],209:[function(require,module,exports){
+},{"./util/assertString":242}],213:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30423,7 +31006,7 @@ var lat = /^\(?[+-]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/;
 var long = /^\s?[+-]?(180(\.0+)?|1[0-7]\d(\.\d+)?|\d{1,2}(\.\d+)?)\)?$/;
 
 module.exports = exports['default'];
-},{"./util/assertString":238}],210:[function(require,module,exports){
+},{"./util/assertString":242}],214:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30458,7 +31041,7 @@ function isLength(str, options) {
   return len >= min && (typeof max === 'undefined' || len <= max);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],211:[function(require,module,exports){
+},{"./util/assertString":242}],215:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30477,7 +31060,7 @@ function isLowercase(str) {
   return str === str.toLowerCase();
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],212:[function(require,module,exports){
+},{"./util/assertString":242}],216:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30498,7 +31081,7 @@ function isMACAddress(str) {
   return macAddress.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],213:[function(require,module,exports){
+},{"./util/assertString":242}],217:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30519,7 +31102,7 @@ function isMD5(str) {
   return md5.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],214:[function(require,module,exports){
+},{"./util/assertString":242}],218:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30572,7 +31155,7 @@ function isMimeType(str) {
   return mimeTypeSimple.test(str) || mimeTypeText.test(str) || mimeTypeMultipart.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],215:[function(require,module,exports){
+},{"./util/assertString":242}],219:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30676,7 +31259,7 @@ function isMobilePhone(str, locale, options) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],216:[function(require,module,exports){
+},{"./util/assertString":242}],220:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30699,7 +31282,7 @@ function isMongoId(str) {
   return (0, _isHexadecimal2.default)(str) && str.length === 24;
 }
 module.exports = exports['default'];
-},{"./isHexadecimal":198,"./util/assertString":238}],217:[function(require,module,exports){
+},{"./isHexadecimal":202,"./util/assertString":242}],221:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30722,7 +31305,7 @@ function isMultibyte(str) {
   return multibyte.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],218:[function(require,module,exports){
+},{"./util/assertString":242}],222:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30743,7 +31326,7 @@ function isNumeric(str) {
   return numeric.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],219:[function(require,module,exports){
+},{"./util/assertString":242}],223:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30761,7 +31344,7 @@ function isPort(str) {
   return (0, _isInt2.default)(str, { min: 0, max: 65535 });
 }
 module.exports = exports['default'];
-},{"./isInt":207}],220:[function(require,module,exports){
+},{"./isInt":211}],224:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30838,7 +31421,7 @@ var patterns = {
 };
 
 var locales = exports.locales = Object.keys(patterns);
-},{"./util/assertString":238}],221:[function(require,module,exports){
+},{"./util/assertString":242}],225:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30859,7 +31442,7 @@ function isSurrogatePair(str) {
   return surrogatePair.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],222:[function(require,module,exports){
+},{"./util/assertString":242}],226:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31007,7 +31590,7 @@ function isURL(url, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./isFQDN":192,"./isIP":199,"./util/assertString":238,"./util/merge":239}],223:[function(require,module,exports){
+},{"./isFQDN":196,"./isIP":203,"./util/assertString":242,"./util/merge":243}],227:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31036,7 +31619,7 @@ function isUUID(str) {
   return pattern && pattern.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],224:[function(require,module,exports){
+},{"./util/assertString":242}],228:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31055,7 +31638,7 @@ function isUppercase(str) {
   return str === str.toUpperCase();
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],225:[function(require,module,exports){
+},{"./util/assertString":242}],229:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31078,7 +31661,7 @@ function isVariableWidth(str) {
   return _isFullWidth.fullWidth.test(str) && _isHalfWidth.halfWidth.test(str);
 }
 module.exports = exports['default'];
-},{"./isFullWidth":194,"./isHalfWidth":195,"./util/assertString":238}],226:[function(require,module,exports){
+},{"./isFullWidth":198,"./isHalfWidth":199,"./util/assertString":242}],230:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31102,7 +31685,7 @@ function isWhitelisted(str, chars) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],227:[function(require,module,exports){
+},{"./util/assertString":242}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31122,7 +31705,7 @@ function ltrim(str, chars) {
   return str.replace(pattern, '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],228:[function(require,module,exports){
+},{"./util/assertString":242}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31144,7 +31727,7 @@ function matches(str, pattern, modifiers) {
   return pattern.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],229:[function(require,module,exports){
+},{"./util/assertString":242}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31274,7 +31857,7 @@ function normalizeEmail(email, options) {
   return parts.join('@');
 }
 module.exports = exports['default'];
-},{"./util/merge":239}],230:[function(require,module,exports){
+},{"./util/merge":243}],234:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31300,7 +31883,7 @@ function rtrim(str, chars) {
   return idx < str.length ? str.substr(0, idx + 1) : str;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],231:[function(require,module,exports){
+},{"./util/assertString":242}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31324,7 +31907,7 @@ function stripLow(str, keep_new_lines) {
   return (0, _blacklist2.default)(str, chars);
 }
 module.exports = exports['default'];
-},{"./blacklist":173,"./util/assertString":238}],232:[function(require,module,exports){
+},{"./blacklist":177,"./util/assertString":242}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31346,7 +31929,7 @@ function toBoolean(str, strict) {
   return str !== '0' && str !== 'false' && str !== '';
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],233:[function(require,module,exports){
+},{"./util/assertString":242}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31366,7 +31949,7 @@ function toDate(date) {
   return !isNaN(date) ? new Date(date) : null;
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],234:[function(require,module,exports){
+},{"./util/assertString":242}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31385,7 +31968,7 @@ function toFloat(str) {
   return parseFloat(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],235:[function(require,module,exports){
+},{"./util/assertString":242}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31404,7 +31987,7 @@ function toInt(str, radix) {
   return parseInt(str, radix || 10);
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],236:[function(require,module,exports){
+},{"./util/assertString":242}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31426,7 +32009,7 @@ function trim(str, chars) {
   return (0, _rtrim2.default)((0, _ltrim2.default)(str, chars), chars);
 }
 module.exports = exports['default'];
-},{"./ltrim":227,"./rtrim":230}],237:[function(require,module,exports){
+},{"./ltrim":231,"./rtrim":234}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31445,7 +32028,7 @@ function unescape(str) {
   return str.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#x2F;/g, '/').replace(/&#x5C;/g, '\\').replace(/&#96;/g, '`');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],238:[function(require,module,exports){
+},{"./util/assertString":242}],242:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31460,7 +32043,7 @@ function assertString(input) {
   }
 }
 module.exports = exports['default'];
-},{}],239:[function(require,module,exports){
+},{}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31479,7 +32062,7 @@ function merge() {
   return obj;
 }
 module.exports = exports['default'];
-},{}],240:[function(require,module,exports){
+},{}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31502,7 +32085,7 @@ function toString(input) {
   return String(input);
 }
 module.exports = exports['default'];
-},{}],241:[function(require,module,exports){
+},{}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31521,7 +32104,7 @@ function whitelist(str, chars) {
   return str.replace(new RegExp('[^' + chars + ']+', 'g'), '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":238}],242:[function(require,module,exports){
+},{"./util/assertString":242}],246:[function(require,module,exports){
 (function(self) {
   'use strict';
 
