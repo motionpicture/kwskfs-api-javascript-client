@@ -1516,7 +1516,6 @@ var EventService = /** @class */ (function (_super) {
                         // tslint:disable-next-line:max-line-length
                         uri: "/events/" + params.eventType + "/" + params.eventIdentifier + "/offers/" + params.organizationId + "/menuItem/" + params.menuItemIdentifier + "/" + params.offerIdentifier + "/availability/" + params.availability,
                         method: 'PUT',
-                        qs: params,
                         expectedStatusCodes: [http_status_1.NO_CONTENT]
                     })];
             });
@@ -1595,6 +1594,22 @@ var OrderService = /** @class */ (function (_super) {
                         method: 'GET',
                         qs: params,
                         expectedStatusCodes: [http_status_1.OK]
+                    })];
+            });
+        });
+    };
+    /**
+     * 注文ステータスを配送済に変更する
+     */
+    // tslint:disable-next-line:no-single-line-block-comment
+    /* istanbul ignore next */
+    OrderService.prototype.deliver = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/orders/" + params.orderNumber + "/orderStatus/delivered",
+                        method: 'PUT',
+                        expectedStatusCodes: [http_status_1.NO_CONTENT]
                     })];
             });
         });
@@ -3070,6 +3085,7 @@ var ActionType;
     ActionType["RefundAction"] = "RefundAction";
     ActionType["ReturnAction"] = "ReturnAction";
     ActionType["SendAction"] = "SendAction";
+    ActionType["UpdateAction"] = "UpdateAction";
     ActionType["UseAction"] = "UseAction";
 })(ActionType || (ActionType = {}));
 exports.default = ActionType;
