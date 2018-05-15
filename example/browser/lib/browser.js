@@ -104,7 +104,7 @@ var IframeHandler = /** @class */ (function () {
 }());
 exports.default = IframeHandler;
 
-},{"debug":149}],4:[function(require,module,exports){
+},{"debug":152}],4:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -448,7 +448,7 @@ var ImplicitGrantClient = /** @class */ (function (_super) {
 }(oAuth2client_1.default));
 exports.ImplicitGrantClient = ImplicitGrantClient;
 
-},{"./error":2,"./oAuth2client":5,"./popupAuthenticationHandler":6,"./silentAuthenticationHandler":8,"./silentLogoutHandler":9,"debug":149,"idtoken-verifier":158,"qs":164}],5:[function(require,module,exports){
+},{"./error":2,"./oAuth2client":5,"./popupAuthenticationHandler":6,"./silentAuthenticationHandler":8,"./silentLogoutHandler":9,"debug":152,"idtoken-verifier":161,"qs":167}],5:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -640,7 +640,7 @@ var OAuth2client = /** @class */ (function () {
 }());
 exports.default = OAuth2client;
 
-},{"@motionpicture/kwskfs-api-abstract-client":12,"debug":149,"http-status":151,"isomorphic-fetch":159}],6:[function(require,module,exports){
+},{"@motionpicture/kwskfs-api-abstract-client":12,"debug":152,"http-status":154,"isomorphic-fetch":162}],6:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -824,7 +824,7 @@ var PopupHandler = /** @class */ (function () {
 }());
 exports.default = PopupHandler;
 
-},{"debug":149}],8:[function(require,module,exports){
+},{"debug":152}],8:[function(require,module,exports){
 "use strict";
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -1142,9 +1142,8 @@ var StubAuthClient = /** @class */ (function () {
 }());
 exports.StubAuthClient = StubAuthClient;
 
-},{"../transporters":22}],12:[function(require,module,exports){
+},{"../transporters":23}],12:[function(require,module,exports){
 "use strict";
-// tslint:disable:max-classes-per-file
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
         ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
@@ -1156,6 +1155,7 @@ var __extends = (this && this.__extends) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
+// tslint:disable:max-classes-per-file
 /**
  * Sasaki API Service Library for Javascript
  * @ignore
@@ -1166,6 +1166,7 @@ var action_1 = require("./service/action");
 var event_1 = require("./service/event");
 var order_1 = require("./service/order");
 var organization_1 = require("./service/organization");
+var ownershipInfo_1 = require("./service/ownershipInfo");
 var person_1 = require("./service/person");
 var place_1 = require("./service/place");
 var placeOrder_1 = require("./service/transaction/placeOrder");
@@ -1174,9 +1175,7 @@ var transporters = require("./transporters");
 exports.factory = factory;
 exports.transporters = transporters;
 /**
- * auth client abstract class
  * 認証クライアント抽象クラス
- * @export
  */
 var Auth = /** @class */ (function (_super) {
     __extends(Auth, _super);
@@ -1189,7 +1188,7 @@ exports.Auth = Auth;
 var service;
 (function (service) {
     /**
-     * action service
+     * アクションサービス
      */
     var Action = /** @class */ (function (_super) {
         __extends(Action, _super);
@@ -1200,7 +1199,7 @@ var service;
     }(action_1.ActionService));
     service.Action = Action;
     /**
-     * event service
+     * イベントサービス
      */
     var Event = /** @class */ (function (_super) {
         __extends(Event, _super);
@@ -1211,7 +1210,7 @@ var service;
     }(event_1.EventService));
     service.Event = Event;
     /**
-     * order service
+     * 注文サービス
      */
     var Order = /** @class */ (function (_super) {
         __extends(Order, _super);
@@ -1222,7 +1221,7 @@ var service;
     }(order_1.OrderService));
     service.Order = Order;
     /**
-     * organization service
+     * 組織サービス
      */
     var Organization = /** @class */ (function (_super) {
         __extends(Organization, _super);
@@ -1233,7 +1232,18 @@ var service;
     }(organization_1.OrganizationService));
     service.Organization = Organization;
     /**
-     * person service
+     * 所有権サービス
+     */
+    var OwnershipInfo = /** @class */ (function (_super) {
+        __extends(OwnershipInfo, _super);
+        function OwnershipInfo() {
+            return _super !== null && _super.apply(this, arguments) || this;
+        }
+        return OwnershipInfo;
+    }(ownershipInfo_1.OwnershipInfoService));
+    service.OwnershipInfo = OwnershipInfo;
+    /**
+     * 人物サービス
      */
     var Person = /** @class */ (function (_super) {
         __extends(Person, _super);
@@ -1244,7 +1254,7 @@ var service;
     }(person_1.PersonService));
     service.Person = Person;
     /**
-     * place service
+     * 場所サービス
      */
     var Place = /** @class */ (function (_super) {
         __extends(Place, _super);
@@ -1281,7 +1291,7 @@ var service;
     })(transaction = service.transaction || (service.transaction = {}));
 })(service = exports.service || (exports.service = {}));
 
-},{"./auth/authClient":11,"./service/action":14,"./service/event":15,"./service/order":16,"./service/organization":17,"./service/person":18,"./service/place":19,"./service/transaction/placeOrder":20,"./service/transaction/returnOrder":21,"./transporters":22,"@motionpicture/kwskfs-factory":103}],13:[function(require,module,exports){
+},{"./auth/authClient":11,"./service/action":14,"./service/event":15,"./service/order":16,"./service/organization":17,"./service/ownershipInfo":18,"./service/person":19,"./service/place":20,"./service/transaction/placeOrder":21,"./service/transaction/returnOrder":22,"./transporters":23,"@motionpicture/kwskfs-factory":106}],13:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -1379,7 +1389,7 @@ var Service = /** @class */ (function () {
 }());
 exports.Service = Service;
 
-},{"./transporters":22,"qs":164}],14:[function(require,module,exports){
+},{"./transporters":23,"qs":167}],14:[function(require,module,exports){
 "use strict";
 // import * as factory from '@motionpicture/kwskfs-factory';
 // import { CREATED, OK } from 'http-status';
@@ -1525,7 +1535,7 @@ var EventService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.EventService = EventService;
 
-},{"../service":13,"http-status":23}],16:[function(require,module,exports){
+},{"../service":13,"http-status":24}],16:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1618,7 +1628,7 @@ var OrderService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.OrderService = OrderService;
 
-},{"../service":13,"http-status":23}],17:[function(require,module,exports){
+},{"../service":13,"http-status":24}],17:[function(require,module,exports){
 "use strict";
 /**
  * 組織サービス
@@ -1704,7 +1714,97 @@ var OrganizationService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.OrganizationService = OrganizationService;
 
-},{"../service":13,"http-status":23}],18:[function(require,module,exports){
+},{"../service":13,"http-status":24}],18:[function(require,module,exports){
+"use strict";
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : new P(function (resolve) { resolve(result.value); }).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = y[op[0] & 2 ? "return" : op[0] ? "throw" : "next"]) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [0, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var http_status_1 = require("http-status");
+var service_1 = require("../service");
+/**
+ * 所有権サービス
+ */
+var OwnershipInfoService = /** @class */ (function (_super) {
+    __extends(OwnershipInfoService, _super);
+    function OwnershipInfoService() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    /**
+     * チケットトークンでチェックインアクションを実行する
+     */
+    OwnershipInfoService.prototype.checkInByTicketToken = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/ownershipInfos/" + params.goodType + "/" + params.ticketToken + "/actions/checkIn",
+                        method: 'POST',
+                        expectedStatusCodes: [http_status_1.CREATED]
+                    })];
+            });
+        });
+    };
+    /**
+     * チケットトークンからチェックインアクションを検索する
+     */
+    OwnershipInfoService.prototype.searchCheckInActions = function (params) {
+        return __awaiter(this, void 0, void 0, function () {
+            return __generator(this, function (_a) {
+                return [2 /*return*/, this.fetch({
+                        uri: "/ownershipInfos/" + params.goodType + "/" + params.ticketToken + "/actions/checkIn",
+                        method: 'GET',
+                        expectedStatusCodes: [http_status_1.OK]
+                    })];
+            });
+        });
+    };
+    return OwnershipInfoService;
+}(service_1.Service));
+exports.OwnershipInfoService = OwnershipInfoService;
+
+},{"../service":13,"http-status":24}],19:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -1912,7 +2012,7 @@ var PersonService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.PersonService = PersonService;
 
-},{"../service":13,"http-status":23}],19:[function(require,module,exports){
+},{"../service":13,"http-status":24}],20:[function(require,module,exports){
 "use strict";
 /**
  * 場所サービス
@@ -1943,7 +2043,7 @@ var PlaceService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.PlaceService = PlaceService;
 
-},{"../service":13}],20:[function(require,module,exports){
+},{"../service":13}],21:[function(require,module,exports){
 "use strict";
 /**
  * 注文取引サービス
@@ -2163,7 +2263,10 @@ var PlaceOrderTransactionService = /** @class */ (function (_super) {
                 return [2 /*return*/, this.fetch({
                         uri: "/transactions/placeOrder/" + params.transactionId + "/confirm",
                         method: 'POST',
-                        expectedStatusCodes: [http_status_1.CREATED]
+                        expectedStatusCodes: [http_status_1.CREATED],
+                        body: {
+                            sendEmailMessage: params.sendEmailMessage
+                        }
                     })];
             });
         });
@@ -2188,7 +2291,7 @@ var PlaceOrderTransactionService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.PlaceOrderTransactionService = PlaceOrderTransactionService;
 
-},{"../../service":13,"http-status":23}],21:[function(require,module,exports){
+},{"../../service":13,"http-status":24}],22:[function(require,module,exports){
 "use strict";
 /**
  * 注文返品取引サービス
@@ -2303,7 +2406,7 @@ var ReturnOrderTransactionService = /** @class */ (function (_super) {
 }(service_1.Service));
 exports.ReturnOrderTransactionService = ReturnOrderTransactionService;
 
-},{"../../service":13,"http-status":23}],22:[function(require,module,exports){
+},{"../../service":13,"http-status":24}],23:[function(require,module,exports){
 "use strict";
 // tslint:disable:max-classes-per-file
 var __extends = (this && this.__extends) || (function () {
@@ -2569,7 +2672,7 @@ exports.DefaultTransporter = DefaultTransporter;
 //     }
 // }
 
-},{"debug":149,"http-status":23,"isomorphic-fetch":159}],23:[function(require,module,exports){
+},{"debug":152,"http-status":24,"isomorphic-fetch":162}],24:[function(require,module,exports){
 // Generated by CoffeeScript 2.3.0
 // # node-http-status
 
@@ -3054,7 +3157,7 @@ module.exports = {
   }
 };
 
-},{}],24:[function(require,module,exports){
+},{}],25:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -3070,7 +3173,7 @@ var ActionStatusType;
 })(ActionStatusType || (ActionStatusType = {}));
 exports.default = ActionStatusType;
 
-},{}],25:[function(require,module,exports){
+},{}],26:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -3079,6 +3182,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var ActionType;
 (function (ActionType) {
     ActionType["AuthorizeAction"] = "AuthorizeAction";
+    ActionType["CheckInAction"] = "CheckInAction";
     ActionType["OrderAction"] = "OrderAction";
     ActionType["PayAction"] = "PayAction";
     ActionType["PrintAction"] = "PrintAction";
@@ -3090,7 +3194,7 @@ var ActionType;
 })(ActionType || (ActionType = {}));
 exports.default = ActionType;
 
-},{}],26:[function(require,module,exports){
+},{}],27:[function(require,module,exports){
 "use strict";
 /**
  * credit card authorization factory
@@ -3115,21 +3219,21 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],27:[function(require,module,exports){
+},{"../../actionType":26}],28:[function(require,module,exports){
 "use strict";
 /**
  * メニューアイテム予約オファーに対する承認アクション
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],28:[function(require,module,exports){
+},{}],29:[function(require,module,exports){
 "use strict";
 /**
  * イベントの座席予約オファーに対する承認アクション
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],29:[function(require,module,exports){
+},{}],30:[function(require,module,exports){
 "use strict";
 /**
  * Pecorino口座承認アクションファクトリー
@@ -3153,7 +3257,11 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],30:[function(require,module,exports){
+},{"../../actionType":26}],31:[function(require,module,exports){
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+
+},{}],32:[function(require,module,exports){
 "use strict";
 /**
  * 注文アクションファクトリー
@@ -3171,7 +3279,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],31:[function(require,module,exports){
+},{"../../actionType":26}],33:[function(require,module,exports){
 "use strict";
 /**
  * 支払アクションファクトリー
@@ -3189,7 +3297,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],32:[function(require,module,exports){
+},{"../../actionType":26}],34:[function(require,module,exports){
 "use strict";
 /**
  * 返金アクションファクトリー
@@ -3209,7 +3317,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],33:[function(require,module,exports){
+},{"../../actionType":26}],35:[function(require,module,exports){
 "use strict";
 /**
  * 印刷アクションファクトリー
@@ -3227,7 +3335,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],34:[function(require,module,exports){
+},{"../../actionType":26}],36:[function(require,module,exports){
 "use strict";
 /**
  * チケット印刷アクションファクトリー
@@ -3240,7 +3348,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../print":33}],35:[function(require,module,exports){
+},{"../print":35}],37:[function(require,module,exports){
 "use strict";
 /**
  * 返却アクションファクトリー
@@ -3258,11 +3366,8 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],36:[function(require,module,exports){
+},{"../../actionType":26}],38:[function(require,module,exports){
 "use strict";
-/**
- * 注文返品アクションファクトリー
- */
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
         s = arguments[i];
@@ -3278,7 +3383,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../return":35}],37:[function(require,module,exports){
+},{"../return":37}],39:[function(require,module,exports){
 "use strict";
 /**
  * 送信(配送)アクションファクトリー
@@ -3298,7 +3403,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../actionType":25}],38:[function(require,module,exports){
+},{"../../actionType":26}],40:[function(require,module,exports){
 "use strict";
 /**
  * Eメール送信アクションファクトリー
@@ -3318,7 +3423,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../../send":37}],39:[function(require,module,exports){
+},{"../../send":39}],41:[function(require,module,exports){
 "use strict";
 /**
  * 注文配送アクションファクトリー
@@ -3338,7 +3443,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../send":37}],40:[function(require,module,exports){
+},{"../send":39}],42:[function(require,module,exports){
 "use strict";
 /**
  * アプリケーションクライアントイベントファクトリー
@@ -3348,7 +3453,7 @@ exports.createAttributes = createAttributes;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],41:[function(require,module,exports){
+},{}],43:[function(require,module,exports){
 "use strict";
 /**
  * アプリケーションクライアントユーザーファクトリー
@@ -3356,7 +3461,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],42:[function(require,module,exports){
+},{}],44:[function(require,module,exports){
 "use strict";
 /**
  * 作品タイプ
@@ -3369,7 +3474,7 @@ var CreativeWorkType;
 })(CreativeWorkType || (CreativeWorkType = {}));
 exports.default = CreativeWorkType;
 
-},{}],43:[function(require,module,exports){
+},{}],45:[function(require,module,exports){
 "use strict";
 /**
  * Eメールメッセージファクトリー
@@ -3416,7 +3521,7 @@ function create(params) {
 }
 exports.create = create;
 
-},{"../../creativeWorkType":42,"../../error/argument":46,"../../error/argumentNull":47,"validator":175}],44:[function(require,module,exports){
+},{"../../creativeWorkType":44,"../../error/argument":48,"../../error/argumentNull":49,"validator":178}],46:[function(require,module,exports){
 "use strict";
 /**
  * エラーコード
@@ -3436,7 +3541,7 @@ var ErrorCode;
 })(ErrorCode || (ErrorCode = {}));
 exports.default = ErrorCode;
 
-},{}],45:[function(require,module,exports){
+},{}],47:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3475,7 +3580,7 @@ var AlreadyInUseError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = AlreadyInUseError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],46:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],48:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3513,7 +3618,7 @@ var ArgumentError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ArgumentError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],47:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],49:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3551,7 +3656,7 @@ var ArgumentNullError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ArgumentNullError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],48:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],50:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3588,7 +3693,7 @@ var ForbiddenError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ForbiddenError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],49:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],51:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3617,7 +3722,7 @@ var KWSKFSError = /** @class */ (function (_super) {
 }(Error));
 exports.KWSKFSError = KWSKFSError;
 
-},{}],50:[function(require,module,exports){
+},{}],52:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3655,7 +3760,7 @@ var NotFoundError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = NotFoundError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],51:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],53:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3692,7 +3797,7 @@ var NotImplementedError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = NotImplementedError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],52:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],54:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3729,7 +3834,7 @@ var RateLimitExceededError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = RateLimitExceededError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],53:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],55:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3766,7 +3871,7 @@ var ServiceUnavailableError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = ServiceUnavailableError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],54:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],56:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -3803,7 +3908,7 @@ var UnauthorizedError = /** @class */ (function (_super) {
 }(kwskfs_1.KWSKFSError));
 exports.default = UnauthorizedError;
 
-},{"../errorCode":44,"./kwskfs":49,"setprototypeof":168}],55:[function(require,module,exports){
+},{"../errorCode":46,"./kwskfs":51,"setprototypeof":171}],57:[function(require,module,exports){
 "use strict";
 /**
  * errors
@@ -3831,7 +3936,7 @@ exports.ServiceUnavailable = serviceUnavailable_1.default;
 var unauthorized_1 = require("./error/unauthorized");
 exports.Unauthorized = unauthorized_1.default;
 
-},{"./error/alreadyInUse":45,"./error/argument":46,"./error/argumentNull":47,"./error/forbidden":48,"./error/kwskfs":49,"./error/notFound":50,"./error/notImplemented":51,"./error/rateLimitExceeded":52,"./error/serviceUnavailable":53,"./error/unauthorized":54}],56:[function(require,module,exports){
+},{"./error/alreadyInUse":47,"./error/argument":48,"./error/argumentNull":49,"./error/forbidden":50,"./error/kwskfs":51,"./error/notFound":52,"./error/notImplemented":53,"./error/rateLimitExceeded":54,"./error/serviceUnavailable":55,"./error/unauthorized":56}],58:[function(require,module,exports){
 "use strict";
 /**
  * イベントステータス
@@ -3846,7 +3951,7 @@ var EventStatusType;
 })(EventStatusType || (EventStatusType = {}));
 exports.default = EventStatusType;
 
-},{}],57:[function(require,module,exports){
+},{}],59:[function(require,module,exports){
 "use strict";
 /**
  * イベントタイプ
@@ -3859,21 +3964,21 @@ var EventType;
 })(EventType || (EventType = {}));
 exports.default = EventType;
 
-},{}],58:[function(require,module,exports){
+},{}],60:[function(require,module,exports){
 "use strict";
 /**
  * フードイベントファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],59:[function(require,module,exports){
+},{}],61:[function(require,module,exports){
 "use strict";
 /**
  * スポーツイベントファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],60:[function(require,module,exports){
+},{}],62:[function(require,module,exports){
 "use strict";
 /**
  * 商品在庫状況
@@ -3893,21 +3998,21 @@ var ItemAvailability;
 })(ItemAvailability || (ItemAvailability = {}));
 exports.default = ItemAvailability;
 
-},{}],61:[function(require,module,exports){
+},{}],63:[function(require,module,exports){
 "use strict";
 /**
  * メニューアイテム予約オファーファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],62:[function(require,module,exports){
+},{}],64:[function(require,module,exports){
 "use strict";
 /**
  * イベントの座席予約オファーファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],63:[function(require,module,exports){
+},{}],65:[function(require,module,exports){
 "use strict";
 /**
  * order factory
@@ -3918,7 +4023,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],64:[function(require,module,exports){
+},{}],66:[function(require,module,exports){
 "use strict";
 /**
  * 注文ステータス
@@ -3937,7 +4042,7 @@ var OrderStatus;
 })(OrderStatus || (OrderStatus = {}));
 exports.default = OrderStatus;
 
-},{}],65:[function(require,module,exports){
+},{}],67:[function(require,module,exports){
 "use strict";
 /**
  * 企業識別子
@@ -3949,7 +4054,7 @@ var CorporationOrganizationIdentifier;
 })(CorporationOrganizationIdentifier || (CorporationOrganizationIdentifier = {}));
 exports.default = CorporationOrganizationIdentifier;
 
-},{}],66:[function(require,module,exports){
+},{}],68:[function(require,module,exports){
 "use strict";
 /**
  * 組織タイプ
@@ -3964,32 +4069,30 @@ var OrganizationType;
 })(OrganizationType || (OrganizationType = {}));
 exports.default = OrganizationType;
 
-},{}],67:[function(require,module,exports){
+},{}],69:[function(require,module,exports){
 "use strict";
 /**
  * 企業ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],68:[function(require,module,exports){
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-
-},{}],69:[function(require,module,exports){
+},{}],70:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"dup":31}],71:[function(require,module,exports){
 "use strict";
 /**
  * スポーツチームファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],70:[function(require,module,exports){
+},{}],72:[function(require,module,exports){
 "use strict";
 /**
  * 所有権ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],71:[function(require,module,exports){
+},{}],73:[function(require,module,exports){
 "use strict";
 /**
  * 決済方法タイプ
@@ -4003,7 +4106,7 @@ var PaymentMethodType;
 })(PaymentMethodType || (PaymentMethodType = {}));
 exports.default = PaymentMethodType;
 
-},{}],72:[function(require,module,exports){
+},{}],74:[function(require,module,exports){
 "use strict";
 /**
  * credit card factory
@@ -4034,8 +4137,8 @@ exports.createCheckedCardFromGMOSearchCardResult = createCheckedCardFromGMOSearc
  * @export
  * @param params.cardNo カード番号
  * @param [params.cardPass] カードパスワード
- * @param params.expire 有効期限 名義人
- * @param params.holderName
+ * @param params.expire 有効期限
+ * @param params.holderName 名義人
  */
 function createUncheckedCardRaw(params) {
     return params;
@@ -4050,7 +4153,7 @@ function createUncheckedCardTokenized(params) {
 }
 exports.createUncheckedCardTokenized = createUncheckedCardTokenized;
 
-},{"../../paymentMethodType":71}],73:[function(require,module,exports){
+},{"../../paymentMethodType":73}],75:[function(require,module,exports){
 "use strict";
 /**
  * person factory
@@ -4059,7 +4162,7 @@ exports.createUncheckedCardTokenized = createUncheckedCardTokenized;
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],74:[function(require,module,exports){
+},{}],76:[function(require,module,exports){
 "use strict";
 /**
  * 人物タイプ
@@ -4071,7 +4174,7 @@ var PersonType;
 })(PersonType || (PersonType = {}));
 exports.default = PersonType;
 
-},{}],75:[function(require,module,exports){
+},{}],77:[function(require,module,exports){
 "use strict";
 /**
  * 場所タイプ
@@ -4086,7 +4189,7 @@ var PlaceType;
 })(PlaceType || (PlaceType = {}));
 exports.default = PlaceType;
 
-},{}],76:[function(require,module,exports){
+},{}],78:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -4100,14 +4203,14 @@ var PriceCurrency;
 })(PriceCurrency || (PriceCurrency = {}));
 exports.default = PriceCurrency;
 
-},{}],77:[function(require,module,exports){
+},{}],79:[function(require,module,exports){
 "use strict";
 /**
  * 会員プログラムファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],78:[function(require,module,exports){
+},{}],80:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -4134,7 +4237,7 @@ var ReservationStatusType;
 })(ReservationStatusType || (ReservationStatusType = {}));
 exports.default = ReservationStatusType;
 
-},{}],79:[function(require,module,exports){
+},{}],81:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -4146,14 +4249,14 @@ var ReservationType;
 })(ReservationType || (ReservationType = {}));
 exports.default = ReservationType;
 
-},{}],80:[function(require,module,exports){
+},{}],82:[function(require,module,exports){
 "use strict";
 /**
  * イベント予約ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],81:[function(require,module,exports){
+},{}],83:[function(require,module,exports){
 "use strict";
 /**
  * タスクファクトリー
@@ -4199,7 +4302,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"./error/argument":46,"./error/argumentNull":47,"lodash":104,"validator":175}],82:[function(require,module,exports){
+},{"./error/argument":48,"./error/argumentNull":49,"lodash":107,"validator":178}],84:[function(require,module,exports){
 "use strict";
 /**
  * タスク実行結果ファクトリー
@@ -4214,7 +4317,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{}],83:[function(require,module,exports){
+},{}],85:[function(require,module,exports){
 "use strict";
 /**
  * task name
@@ -4267,10 +4370,14 @@ var TaskName;
      * クレジットカード返金
      */
     TaskName["RefundCreditCard"] = "refundCreditCard";
+    /**
+     * Pecorino返金
+     */
+    TaskName["RefundPecorino"] = "refundPecorino";
 })(TaskName || (TaskName = {}));
 exports.default = TaskName;
 
-},{}],84:[function(require,module,exports){
+},{}],86:[function(require,module,exports){
 "use strict";
 /**
  * タスクステータス
@@ -4297,7 +4404,7 @@ var TaskStatus;
 })(TaskStatus || (TaskStatus = {}));
 exports.default = TaskStatus;
 
-},{}],85:[function(require,module,exports){
+},{}],87:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード承認解除タスクファクトリー
@@ -4319,7 +4426,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],86:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],88:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -4337,7 +4444,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],87:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],89:[function(require,module,exports){
 "use strict";
 /**
  * 座席予約承認解除タスクファクトリー
@@ -4359,7 +4466,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],88:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],90:[function(require,module,exports){
 "use strict";
 var __assign = (this && this.__assign) || Object.assign || function(t) {
     for (var s, i = 1, n = arguments.length; i < n; i++) {
@@ -4377,7 +4484,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],89:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],91:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード支払タスクファクトリー
@@ -4399,7 +4506,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],90:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],92:[function(require,module,exports){
 "use strict";
 /**
  * Pecorino支払タスクファクトリー
@@ -4421,7 +4528,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],91:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],93:[function(require,module,exports){
 "use strict";
 /**
  * 注文受付タスクファクトリー
@@ -4443,7 +4550,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],92:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],94:[function(require,module,exports){
 "use strict";
 /**
  * クレジットカード返金タスクファクトリー
@@ -4464,7 +4571,25 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],93:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],95:[function(require,module,exports){
+"use strict";
+var __assign = (this && this.__assign) || Object.assign || function(t) {
+    for (var s, i = 1, n = arguments.length; i < n; i++) {
+        s = arguments[i];
+        for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+            t[p] = s[p];
+    }
+    return t;
+};
+Object.defineProperty(exports, "__esModule", { value: true });
+var TaskFactory = require("../task");
+var taskName_1 = require("../taskName");
+function createAttributes(params) {
+    return TaskFactory.createAttributes(__assign({}, params, { name: taskName_1.default.RefundPecorino }));
+}
+exports.createAttributes = createAttributes;
+
+},{"../task":83,"../taskName":85}],96:[function(require,module,exports){
 "use strict";
 /**
  * 注文返品タスクファクトリー
@@ -4485,7 +4610,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],94:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],97:[function(require,module,exports){
 "use strict";
 /**
  * Eメール送信タスクファクトリー
@@ -4507,7 +4632,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],95:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],98:[function(require,module,exports){
 "use strict";
 /**
  * 注文配送タスクファクトリー
@@ -4529,7 +4654,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":81,"../taskName":83}],96:[function(require,module,exports){
+},{"../task":83,"../taskName":85}],99:[function(require,module,exports){
 "use strict";
 /**
  * transaction factory
@@ -4581,7 +4706,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"./error/argument":46,"./error/argumentNull":47,"validator":175}],97:[function(require,module,exports){
+},{"./error/argument":48,"./error/argumentNull":49,"validator":178}],100:[function(require,module,exports){
 "use strict";
 /**
  * 取引ステータス
@@ -4596,7 +4721,7 @@ var TransactionStatusType;
 })(TransactionStatusType || (TransactionStatusType = {}));
 exports.default = TransactionStatusType;
 
-},{}],98:[function(require,module,exports){
+},{}],101:[function(require,module,exports){
 "use strict";
 /**
  * 取引タスクエクスポートステータス
@@ -4619,7 +4744,7 @@ var TransactionTasksExportationStatus;
 })(TransactionTasksExportationStatus || (TransactionTasksExportationStatus = {}));
 exports.default = TransactionTasksExportationStatus;
 
-},{}],99:[function(require,module,exports){
+},{}],102:[function(require,module,exports){
 "use strict";
 /**
  * 取引タイプ
@@ -4638,7 +4763,7 @@ var TransactionType;
 })(TransactionType || (TransactionType = {}));
 exports.default = TransactionType;
 
-},{}],100:[function(require,module,exports){
+},{}],103:[function(require,module,exports){
 "use strict";
 /**
  * 注文取引ファクトリー
@@ -4679,7 +4804,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../transaction":96,"../transactionType":99}],101:[function(require,module,exports){
+},{"../transaction":99,"../transactionType":102}],104:[function(require,module,exports){
 "use strict";
 /**
  * 返品取引ファクトリー
@@ -4734,14 +4859,14 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../transaction":96,"../transactionType":99}],102:[function(require,module,exports){
+},{"../transaction":99,"../transactionType":102}],105:[function(require,module,exports){
 "use strict";
 /**
  * URLファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],103:[function(require,module,exports){
+},{}],106:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -4752,6 +4877,7 @@ var CreditCardAuthorizeActionFactory = require("./factory/action/authorize/credi
 var MenuItemEventReservationOfferAuthorizeActionFactory = require("./factory/action/authorize/offer/eventReservation/menuItem");
 var SeatEventReservationOfferAuthorizeActionFactory = require("./factory/action/authorize/offer/eventReservation/seat");
 var PecorinoAuthorizeActionFactory = require("./factory/action/authorize/pecorino");
+var CheckInActionFactory = require("./factory/action/interact/communicate/checkIn");
 var OrderActionFactory = require("./factory/action/trade/order");
 var PayActionFactory = require("./factory/action/trade/pay");
 var RefundActionFactory = require("./factory/action/trade/refund");
@@ -4798,6 +4924,7 @@ var PayCreditCardTaskFactory = require("./factory/task/payCreditCard");
 var PayPecorinoTaskFactory = require("./factory/task/payPecorino");
 var PlaceOrderTaskFactory = require("./factory/task/placeOrder");
 var RefundCreditCardTaskFactory = require("./factory/task/refundCreditCard");
+var RefundPecorinoTaskFactory = require("./factory/task/refundPecorino");
 var ReturnOrderTaskFactory = require("./factory/task/returnOrder");
 var SendEmailMessageTaskFactory = require("./factory/task/sendEmailMessage");
 var SendOrderTaskFactory = require("./factory/task/sendOrder");
@@ -4819,6 +4946,13 @@ exports.actionStatusType = actionStatusType_1.default;
 exports.actionType = actionType_1.default;
 var action;
 (function (action) {
+    var interact;
+    (function (interact) {
+        var communicate;
+        (function (communicate) {
+            communicate.checkIn = CheckInActionFactory;
+        })(communicate = interact.communicate || (interact.communicate = {}));
+    })(interact = action.interact || (action.interact = {}));
     var authorize;
     (function (authorize) {
         authorize.creditCard = CreditCardAuthorizeActionFactory;
@@ -4934,6 +5068,7 @@ var task;
     task.cancelSeatReservation = CancelSeatReservationTaskFactory;
     task.placeOrder = PlaceOrderTaskFactory;
     task.refundCreditCard = RefundCreditCardTaskFactory;
+    task.refundPecorino = RefundPecorinoTaskFactory;
     task.returnOrder = ReturnOrderTaskFactory;
     task.sendEmailMessage = SendEmailMessageTaskFactory;
     task.sendOrder = SendOrderTaskFactory;
@@ -4954,7 +5089,7 @@ exports.transactionTasksExportationStatus = transactionTasksExportationStatus_1.
 exports.transactionType = transactionType_1.default;
 exports.url = URLFactory;
 
-},{"./factory/action/authorize/creditCard":26,"./factory/action/authorize/offer/eventReservation/menuItem":27,"./factory/action/authorize/offer/eventReservation/seat":28,"./factory/action/authorize/pecorino":29,"./factory/action/trade/order":30,"./factory/action/trade/pay":31,"./factory/action/trade/refund":32,"./factory/action/transfer/print/ticket":34,"./factory/action/transfer/return/order":36,"./factory/action/transfer/send/message/email":38,"./factory/action/transfer/send/order":39,"./factory/actionStatusType":24,"./factory/actionType":25,"./factory/clientEvent":40,"./factory/clientUser":41,"./factory/creativeWork/message/email":43,"./factory/creativeWorkType":42,"./factory/errorCode":44,"./factory/errors":55,"./factory/event/food":58,"./factory/event/sports":59,"./factory/eventStatusType":56,"./factory/eventType":57,"./factory/itemAvailability":60,"./factory/offer/eventReservation/menuItem":61,"./factory/offer/eventReservation/seat":62,"./factory/order":63,"./factory/orderStatus":64,"./factory/organization/corporation":67,"./factory/organization/restaurant":68,"./factory/organization/sportsTeam":69,"./factory/organizationIdentifier/corporation":65,"./factory/organizationType":66,"./factory/ownershipInfo":70,"./factory/paymentMethod/paymentCard/creditCard":72,"./factory/paymentMethodType":71,"./factory/person":73,"./factory/personType":74,"./factory/placeType":75,"./factory/priceCurrency":76,"./factory/programMembership":77,"./factory/reservation/event":80,"./factory/reservationStatusType":78,"./factory/reservationType":79,"./factory/task/cancelCreditCard":85,"./factory/task/cancelPecorino":86,"./factory/task/cancelSeatReservation":87,"./factory/task/payBluelab":88,"./factory/task/payCreditCard":89,"./factory/task/payPecorino":90,"./factory/task/placeOrder":91,"./factory/task/refundCreditCard":92,"./factory/task/returnOrder":93,"./factory/task/sendEmailMessage":94,"./factory/task/sendOrder":95,"./factory/taskExecutionResult":82,"./factory/taskName":83,"./factory/taskStatus":84,"./factory/transaction/placeOrder":100,"./factory/transaction/returnOrder":101,"./factory/transactionStatusType":97,"./factory/transactionTasksExportationStatus":98,"./factory/transactionType":99,"./factory/url":102,"@motionpicture/pecorino-factory":143}],104:[function(require,module,exports){
+},{"./factory/action/authorize/creditCard":27,"./factory/action/authorize/offer/eventReservation/menuItem":28,"./factory/action/authorize/offer/eventReservation/seat":29,"./factory/action/authorize/pecorino":30,"./factory/action/interact/communicate/checkIn":31,"./factory/action/trade/order":32,"./factory/action/trade/pay":33,"./factory/action/trade/refund":34,"./factory/action/transfer/print/ticket":36,"./factory/action/transfer/return/order":38,"./factory/action/transfer/send/message/email":40,"./factory/action/transfer/send/order":41,"./factory/actionStatusType":25,"./factory/actionType":26,"./factory/clientEvent":42,"./factory/clientUser":43,"./factory/creativeWork/message/email":45,"./factory/creativeWorkType":44,"./factory/errorCode":46,"./factory/errors":57,"./factory/event/food":60,"./factory/event/sports":61,"./factory/eventStatusType":58,"./factory/eventType":59,"./factory/itemAvailability":62,"./factory/offer/eventReservation/menuItem":63,"./factory/offer/eventReservation/seat":64,"./factory/order":65,"./factory/orderStatus":66,"./factory/organization/corporation":69,"./factory/organization/restaurant":70,"./factory/organization/sportsTeam":71,"./factory/organizationIdentifier/corporation":67,"./factory/organizationType":68,"./factory/ownershipInfo":72,"./factory/paymentMethod/paymentCard/creditCard":74,"./factory/paymentMethodType":73,"./factory/person":75,"./factory/personType":76,"./factory/placeType":77,"./factory/priceCurrency":78,"./factory/programMembership":79,"./factory/reservation/event":82,"./factory/reservationStatusType":80,"./factory/reservationType":81,"./factory/task/cancelCreditCard":87,"./factory/task/cancelPecorino":88,"./factory/task/cancelSeatReservation":89,"./factory/task/payBluelab":90,"./factory/task/payCreditCard":91,"./factory/task/payPecorino":92,"./factory/task/placeOrder":93,"./factory/task/refundCreditCard":94,"./factory/task/refundPecorino":95,"./factory/task/returnOrder":96,"./factory/task/sendEmailMessage":97,"./factory/task/sendOrder":98,"./factory/taskExecutionResult":84,"./factory/taskName":85,"./factory/taskStatus":86,"./factory/transaction/placeOrder":103,"./factory/transaction/returnOrder":104,"./factory/transactionStatusType":100,"./factory/transactionTasksExportationStatus":101,"./factory/transactionType":102,"./factory/url":105,"@motionpicture/pecorino-factory":146}],107:[function(require,module,exports){
 (function (global){
 /**
  * @license
@@ -22063,7 +22198,7 @@ exports.url = URLFactory;
 }.call(this));
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],105:[function(require,module,exports){
+},{}],108:[function(require,module,exports){
 "use strict";
 /**
  * 口座ファクトリー
@@ -22077,7 +22212,7 @@ var AccountType;
     AccountType["Account"] = "Account";
 })(AccountType = exports.AccountType || (exports.AccountType = {}));
 
-},{}],106:[function(require,module,exports){
+},{}],109:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -22090,9 +22225,9 @@ var AccountStatusType;
 })(AccountStatusType || (AccountStatusType = {}));
 exports.default = AccountStatusType;
 
-},{}],107:[function(require,module,exports){
-arguments[4][24][0].apply(exports,arguments)
-},{"dup":24}],108:[function(require,module,exports){
+},{}],110:[function(require,module,exports){
+arguments[4][25][0].apply(exports,arguments)
+},{"dup":25}],111:[function(require,module,exports){
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 /**
@@ -22113,15 +22248,15 @@ var ActionType;
 })(ActionType || (ActionType = {}));
 exports.default = ActionType;
 
-},{}],109:[function(require,module,exports){
-arguments[4][68][0].apply(exports,arguments)
-},{"dup":68}],110:[function(require,module,exports){
-arguments[4][37][0].apply(exports,arguments)
-},{"../../actionType":108,"dup":37}],111:[function(require,module,exports){
-arguments[4][38][0].apply(exports,arguments)
-},{"../../send":110,"dup":38}],112:[function(require,module,exports){
-arguments[4][41][0].apply(exports,arguments)
-},{"dup":41}],113:[function(require,module,exports){
+},{}],112:[function(require,module,exports){
+arguments[4][31][0].apply(exports,arguments)
+},{"dup":31}],113:[function(require,module,exports){
+arguments[4][39][0].apply(exports,arguments)
+},{"../../actionType":111,"dup":39}],114:[function(require,module,exports){
+arguments[4][40][0].apply(exports,arguments)
+},{"../../send":113,"dup":40}],115:[function(require,module,exports){
+arguments[4][43][0].apply(exports,arguments)
+},{"dup":43}],116:[function(require,module,exports){
 "use strict";
 /**
  * 作品タイプ
@@ -22133,11 +22268,11 @@ var CreativeWorkType;
 })(CreativeWorkType || (CreativeWorkType = {}));
 exports.default = CreativeWorkType;
 
-},{}],114:[function(require,module,exports){
-arguments[4][43][0].apply(exports,arguments)
-},{"../../creativeWorkType":113,"../../error/argument":117,"../../error/argumentNull":118,"dup":43,"validator":175}],115:[function(require,module,exports){
-arguments[4][44][0].apply(exports,arguments)
-},{"dup":44}],116:[function(require,module,exports){
+},{}],117:[function(require,module,exports){
+arguments[4][45][0].apply(exports,arguments)
+},{"../../creativeWorkType":116,"../../error/argument":120,"../../error/argumentNull":121,"dup":45,"validator":178}],118:[function(require,module,exports){
+arguments[4][46][0].apply(exports,arguments)
+},{"dup":46}],119:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22175,7 +22310,7 @@ var AlreadyInUseError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = AlreadyInUseError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],117:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],120:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22212,7 +22347,7 @@ var ArgumentError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ArgumentError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],118:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],121:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22249,7 +22384,7 @@ var ArgumentNullError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ArgumentNullError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],119:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],122:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22285,7 +22420,7 @@ var ForbiddenError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ForbiddenError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],120:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],123:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22322,7 +22457,7 @@ var NotFoundError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = NotFoundError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],121:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],124:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22358,7 +22493,7 @@ var NotImplementedError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = NotImplementedError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],122:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],125:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22387,7 +22522,7 @@ var PecorinoError = /** @class */ (function (_super) {
 }(Error));
 exports.PecorinoError = PecorinoError;
 
-},{}],123:[function(require,module,exports){
+},{}],126:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22423,7 +22558,7 @@ var RateLimitExceededError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = RateLimitExceededError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],124:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],127:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22459,7 +22594,7 @@ var ServiceUnavailableError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = ServiceUnavailableError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],125:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],128:[function(require,module,exports){
 "use strict";
 var __extends = (this && this.__extends) || (function () {
     var extendStatics = Object.setPrototypeOf ||
@@ -22495,7 +22630,7 @@ var UnauthorizedError = /** @class */ (function (_super) {
 }(pecorino_1.PecorinoError));
 exports.default = UnauthorizedError;
 
-},{"../errorCode":115,"./pecorino":122,"setprototypeof":168}],126:[function(require,module,exports){
+},{"../errorCode":118,"./pecorino":125,"setprototypeof":171}],129:[function(require,module,exports){
 "use strict";
 /**
  * errors
@@ -22523,7 +22658,7 @@ exports.ServiceUnavailable = serviceUnavailable_1.default;
 var unauthorized_1 = require("./error/unauthorized");
 exports.Unauthorized = unauthorized_1.default;
 
-},{"./error/alreadyInUse":116,"./error/argument":117,"./error/argumentNull":118,"./error/forbidden":119,"./error/notFound":120,"./error/notImplemented":121,"./error/pecorino":122,"./error/rateLimitExceeded":123,"./error/serviceUnavailable":124,"./error/unauthorized":125}],127:[function(require,module,exports){
+},{"./error/alreadyInUse":119,"./error/argument":120,"./error/argumentNull":121,"./error/forbidden":122,"./error/notFound":123,"./error/notImplemented":124,"./error/pecorino":125,"./error/rateLimitExceeded":126,"./error/serviceUnavailable":127,"./error/unauthorized":128}],130:[function(require,module,exports){
 "use strict";
 /**
  * 組織タイプ
@@ -22535,15 +22670,15 @@ var OrganizationType;
 })(OrganizationType || (OrganizationType = {}));
 exports.default = OrganizationType;
 
-},{}],128:[function(require,module,exports){
-arguments[4][74][0].apply(exports,arguments)
-},{"dup":74}],129:[function(require,module,exports){
+},{}],131:[function(require,module,exports){
 arguments[4][76][0].apply(exports,arguments)
-},{"dup":76}],130:[function(require,module,exports){
-arguments[4][81][0].apply(exports,arguments)
-},{"./error/argument":117,"./error/argumentNull":118,"dup":81,"lodash":144,"validator":175}],131:[function(require,module,exports){
-arguments[4][82][0].apply(exports,arguments)
-},{"dup":82}],132:[function(require,module,exports){
+},{"dup":76}],132:[function(require,module,exports){
+arguments[4][78][0].apply(exports,arguments)
+},{"dup":78}],133:[function(require,module,exports){
+arguments[4][83][0].apply(exports,arguments)
+},{"./error/argument":120,"./error/argumentNull":121,"dup":83,"lodash":147,"validator":178}],134:[function(require,module,exports){
+arguments[4][84][0].apply(exports,arguments)
+},{"dup":84}],135:[function(require,module,exports){
 "use strict";
 /**
  * タスク名
@@ -22562,9 +22697,9 @@ var TaskName;
 })(TaskName || (TaskName = {}));
 exports.default = TaskName;
 
-},{}],133:[function(require,module,exports){
-arguments[4][84][0].apply(exports,arguments)
-},{"dup":84}],134:[function(require,module,exports){
+},{}],136:[function(require,module,exports){
+arguments[4][86][0].apply(exports,arguments)
+},{"dup":86}],137:[function(require,module,exports){
 "use strict";
 /**
  * 現金転送中止タスクファクトリー
@@ -22586,7 +22721,7 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":130,"../taskName":132}],135:[function(require,module,exports){
+},{"../task":133,"../taskName":135}],138:[function(require,module,exports){
 "use strict";
 /**
  * 現金転送タスクファクトリー
@@ -22608,11 +22743,11 @@ function createAttributes(params) {
 }
 exports.createAttributes = createAttributes;
 
-},{"../task":130,"../taskName":132}],136:[function(require,module,exports){
-arguments[4][97][0].apply(exports,arguments)
-},{"dup":97}],137:[function(require,module,exports){
-arguments[4][98][0].apply(exports,arguments)
-},{"dup":98}],138:[function(require,module,exports){
+},{"../task":133,"../taskName":135}],139:[function(require,module,exports){
+arguments[4][100][0].apply(exports,arguments)
+},{"dup":100}],140:[function(require,module,exports){
+arguments[4][101][0].apply(exports,arguments)
+},{"dup":101}],141:[function(require,module,exports){
 "use strict";
 /**
  * 取引タイプ
@@ -22635,30 +22770,30 @@ var TransactionType;
 })(TransactionType || (TransactionType = {}));
 exports.default = TransactionType;
 
-},{}],139:[function(require,module,exports){
+},{}],142:[function(require,module,exports){
 "use strict";
 /**
  * 入金取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],140:[function(require,module,exports){
+},{}],143:[function(require,module,exports){
 "use strict";
 /**
  * 支払取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],141:[function(require,module,exports){
+},{}],144:[function(require,module,exports){
 "use strict";
 /**
  * 転送取引ファクトリー
  */
 Object.defineProperty(exports, "__esModule", { value: true });
 
-},{}],142:[function(require,module,exports){
-arguments[4][102][0].apply(exports,arguments)
-},{"dup":102}],143:[function(require,module,exports){
+},{}],145:[function(require,module,exports){
+arguments[4][105][0].apply(exports,arguments)
+},{"dup":105}],146:[function(require,module,exports){
 "use strict";
 /**
  * pecorino-factory
@@ -22742,9 +22877,9 @@ exports.transactionTasksExportationStatus = transactionTasksExportationStatus_1.
 exports.transactionType = transactionType_1.default;
 exports.url = URLFactory;
 
-},{"./factory/account":105,"./factory/accountStatusType":106,"./factory/action/transfer/moneyTransfer":109,"./factory/action/transfer/send/message/email":111,"./factory/actionStatusType":107,"./factory/actionType":108,"./factory/clientUser":112,"./factory/creativeWork/message/email":114,"./factory/creativeWorkType":113,"./factory/errorCode":115,"./factory/errors":126,"./factory/organizationType":127,"./factory/personType":128,"./factory/priceCurrency":129,"./factory/task/cancelMoneyTransfer":134,"./factory/task/moneyTransfer":135,"./factory/taskExecutionResult":131,"./factory/taskName":132,"./factory/taskStatus":133,"./factory/transaction/deposit":139,"./factory/transaction/pay":140,"./factory/transaction/transfer":141,"./factory/transactionStatusType":136,"./factory/transactionTasksExportationStatus":137,"./factory/transactionType":138,"./factory/url":142}],144:[function(require,module,exports){
-arguments[4][104][0].apply(exports,arguments)
-},{"dup":104}],145:[function(require,module,exports){
+},{"./factory/account":108,"./factory/accountStatusType":109,"./factory/action/transfer/moneyTransfer":112,"./factory/action/transfer/send/message/email":114,"./factory/actionStatusType":110,"./factory/actionType":111,"./factory/clientUser":115,"./factory/creativeWork/message/email":117,"./factory/creativeWorkType":116,"./factory/errorCode":118,"./factory/errors":129,"./factory/organizationType":130,"./factory/personType":131,"./factory/priceCurrency":132,"./factory/task/cancelMoneyTransfer":137,"./factory/task/moneyTransfer":138,"./factory/taskExecutionResult":134,"./factory/taskName":135,"./factory/taskStatus":136,"./factory/transaction/deposit":142,"./factory/transaction/pay":143,"./factory/transaction/transfer":144,"./factory/transactionStatusType":139,"./factory/transactionTasksExportationStatus":140,"./factory/transactionType":141,"./factory/url":145}],147:[function(require,module,exports){
+arguments[4][107][0].apply(exports,arguments)
+},{"dup":107}],148:[function(require,module,exports){
 'use strict'
 
 exports.byteLength = byteLength
@@ -22860,7 +22995,7 @@ function fromByteArray (uint8) {
   return parts.join('')
 }
 
-},{}],146:[function(require,module,exports){
+},{}],149:[function(require,module,exports){
 
 /**
  * Expose `Emitter`.
@@ -23025,7 +23160,7 @@ Emitter.prototype.hasListeners = function(event){
   return !! this.listeners(event).length;
 };
 
-},{}],147:[function(require,module,exports){
+},{}],150:[function(require,module,exports){
 ;(function (root, factory) {
 	if (typeof exports === "object") {
 		// CommonJS
@@ -23786,7 +23921,7 @@ Emitter.prototype.hasListeners = function(event){
 	return CryptoJS;
 
 }));
-},{}],148:[function(require,module,exports){
+},{}],151:[function(require,module,exports){
 ;(function (root, factory) {
 	if (typeof exports === "object") {
 		// CommonJS
@@ -23986,7 +24121,7 @@ Emitter.prototype.hasListeners = function(event){
 	return CryptoJS.SHA256;
 
 }));
-},{"./core":147}],149:[function(require,module,exports){
+},{"./core":150}],152:[function(require,module,exports){
 (function (process){
 /**
  * This is the web browser implementation of `debug()`.
@@ -24185,7 +24320,7 @@ function localstorage() {
 }
 
 }).call(this,require('_process'))
-},{"./debug":150,"_process":162}],150:[function(require,module,exports){
+},{"./debug":153,"_process":165}],153:[function(require,module,exports){
 
 /**
  * This is the common logic for both the Node.js and web browser
@@ -24412,7 +24547,7 @@ function coerce(val) {
   return val;
 }
 
-},{"ms":161}],151:[function(require,module,exports){
+},{"ms":164}],154:[function(require,module,exports){
 // Generated by CoffeeScript 1.10.0
 module.exports = {
   100: 'Continue',
@@ -24537,7 +24672,7 @@ module.exports = {
   NETWORK_AUTHENTICATION_REQUIRED: 511
 };
 
-},{}],152:[function(require,module,exports){
+},{}],155:[function(require,module,exports){
 (function (name, context, definition) {
   if (typeof module !== 'undefined' && module.exports) module.exports = definition();
   else if (typeof define === 'function' && define.amd) define(definition);
@@ -24577,7 +24712,7 @@ module.exports = {
 
 });
 
-},{}],153:[function(require,module,exports){
+},{}],156:[function(require,module,exports){
 var base64 = require('base64-js');
 
 function padding(str) {
@@ -24650,7 +24785,7 @@ module.exports = {
   decodeToHEX: decodeToHEX
 };
 
-},{"base64-js":145}],154:[function(require,module,exports){
+},{"base64-js":148}],157:[function(require,module,exports){
 function DummyCache() {}
 
 DummyCache.prototype.get = function () {
@@ -24666,7 +24801,7 @@ DummyCache.prototype.set = function () {
 
 module.exports = DummyCache;
 
-},{}],155:[function(require,module,exports){
+},{}],158:[function(require,module,exports){
 function ConfigurationError(message) {
   this.name = 'ConfigurationError';
   this.message = (message || '');
@@ -24684,7 +24819,7 @@ module.exports = {
   TokenValidationError: TokenValidationError
 };
 
-},{}],156:[function(require,module,exports){
+},{}],159:[function(require,module,exports){
 var urljoin = require('url-join');
 var base64 = require('./base64');
 var request = require('superagent');
@@ -24730,7 +24865,7 @@ module.exports = {
   getJWKS: getJWKS
 };
 
-},{"./base64":153,"superagent":170,"url-join":152}],157:[function(require,module,exports){
+},{"./base64":156,"superagent":173,"url-join":155}],160:[function(require,module,exports){
 /*
 Based on the work of Tom Wu
 http://www-cs-students.stanford.edu/~tjw/jsbn/
@@ -24809,7 +24944,7 @@ RSAVerifier.prototype.verify = function (msg, encsig) {
 
 module.exports = RSAVerifier;
 
-},{"crypto-js/sha256":148,"jsbn":160}],158:[function(require,module,exports){
+},{"crypto-js/sha256":151,"jsbn":163}],161:[function(require,module,exports){
 var RSAVerifier = require('./helpers/rsa-verifier');
 var base64 = require('./helpers/base64');
 var jwks = require('./helpers/jwks');
@@ -25059,7 +25194,7 @@ IdTokenVerifier.prototype.decode = function (token) {
 
 module.exports = IdTokenVerifier;
 
-},{"./helpers/base64":153,"./helpers/dummy-cache":154,"./helpers/error":155,"./helpers/jwks":156,"./helpers/rsa-verifier":157}],159:[function(require,module,exports){
+},{"./helpers/base64":156,"./helpers/dummy-cache":157,"./helpers/error":158,"./helpers/jwks":159,"./helpers/rsa-verifier":160}],162:[function(require,module,exports){
 // the whatwg-fetch polyfill installs the fetch() function
 // on the global object (window or self)
 //
@@ -25067,7 +25202,7 @@ module.exports = IdTokenVerifier;
 require('whatwg-fetch');
 module.exports = self.fetch.bind(self);
 
-},{"whatwg-fetch":246}],160:[function(require,module,exports){
+},{"whatwg-fetch":249}],163:[function(require,module,exports){
 (function(){
 
     // Copyright (c) 2005  Tom Wu
@@ -26426,7 +26561,7 @@ module.exports = self.fetch.bind(self);
 
 }).call(this);
 
-},{}],161:[function(require,module,exports){
+},{}],164:[function(require,module,exports){
 /**
  * Helpers.
  */
@@ -26580,7 +26715,7 @@ function plural(ms, n, name) {
   return Math.ceil(ms / n) + ' ' + name + 's';
 }
 
-},{}],162:[function(require,module,exports){
+},{}],165:[function(require,module,exports){
 // shim for using process in browser
 var process = module.exports = {};
 
@@ -26766,7 +26901,7 @@ process.chdir = function (dir) {
 };
 process.umask = function() { return 0; };
 
-},{}],163:[function(require,module,exports){
+},{}],166:[function(require,module,exports){
 'use strict';
 
 var replace = String.prototype.replace;
@@ -26786,7 +26921,7 @@ module.exports = {
     RFC3986: 'RFC3986'
 };
 
-},{}],164:[function(require,module,exports){
+},{}],167:[function(require,module,exports){
 'use strict';
 
 var stringify = require('./stringify');
@@ -26799,7 +26934,7 @@ module.exports = {
     stringify: stringify
 };
 
-},{"./formats":163,"./parse":165,"./stringify":166}],165:[function(require,module,exports){
+},{"./formats":166,"./parse":168,"./stringify":169}],168:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -26975,7 +27110,7 @@ module.exports = function (str, opts) {
     return utils.compact(obj);
 };
 
-},{"./utils":167}],166:[function(require,module,exports){
+},{"./utils":170}],169:[function(require,module,exports){
 'use strict';
 
 var utils = require('./utils');
@@ -27187,7 +27322,7 @@ module.exports = function (object, opts) {
     return joined.length > 0 ? prefix + joined : '';
 };
 
-},{"./formats":163,"./utils":167}],167:[function(require,module,exports){
+},{"./formats":166,"./utils":170}],170:[function(require,module,exports){
 'use strict';
 
 var has = Object.prototype.hasOwnProperty;
@@ -27391,7 +27526,7 @@ exports.isBuffer = function isBuffer(obj) {
     return !!(obj.constructor && obj.constructor.isBuffer && obj.constructor.isBuffer(obj));
 };
 
-},{}],168:[function(require,module,exports){
+},{}],171:[function(require,module,exports){
 module.exports = Object.setPrototypeOf || ({__proto__:[]} instanceof Array ? setProtoOf : mixinProperties);
 
 function setProtoOf(obj, proto) {
@@ -27408,7 +27543,7 @@ function mixinProperties(obj, proto) {
 	return obj;
 }
 
-},{}],169:[function(require,module,exports){
+},{}],172:[function(require,module,exports){
 function Agent() {
   this._defaults = [];
 }
@@ -27430,7 +27565,7 @@ Agent.prototype._setDefaults = function(req) {
 
 module.exports = Agent;
 
-},{}],170:[function(require,module,exports){
+},{}],173:[function(require,module,exports){
 /**
  * Root reference for iframes.
  */
@@ -28352,7 +28487,7 @@ request.put = function(url, data, fn) {
   return req;
 };
 
-},{"./agent-base":169,"./is-object":171,"./request-base":172,"./response-base":173,"component-emitter":146}],171:[function(require,module,exports){
+},{"./agent-base":172,"./is-object":174,"./request-base":175,"./response-base":176,"component-emitter":149}],174:[function(require,module,exports){
 'use strict';
 
 /**
@@ -28369,7 +28504,7 @@ function isObject(obj) {
 
 module.exports = isObject;
 
-},{}],172:[function(require,module,exports){
+},{}],175:[function(require,module,exports){
 'use strict';
 
 /**
@@ -29065,7 +29200,7 @@ RequestBase.prototype._setTimeouts = function() {
   }
 };
 
-},{"./is-object":171}],173:[function(require,module,exports){
+},{"./is-object":174}],176:[function(require,module,exports){
 'use strict';
 
 /**
@@ -29201,7 +29336,7 @@ ResponseBase.prototype._setStatusProperties = function(status){
     this.notFound = 404 == status;
 };
 
-},{"./utils":174}],174:[function(require,module,exports){
+},{"./utils":177}],177:[function(require,module,exports){
 'use strict';
 
 /**
@@ -29274,7 +29409,7 @@ exports.cleanHeader = function(header, changesOrigin){
   return header;
 };
 
-},{}],175:[function(require,module,exports){
+},{}],178:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29626,7 +29761,7 @@ var validator = {
 
 exports.default = validator;
 module.exports = exports['default'];
-},{"./lib/blacklist":177,"./lib/contains":178,"./lib/equals":179,"./lib/escape":180,"./lib/isAfter":181,"./lib/isAlpha":182,"./lib/isAlphanumeric":183,"./lib/isAscii":184,"./lib/isBase64":185,"./lib/isBefore":186,"./lib/isBoolean":187,"./lib/isByteLength":188,"./lib/isCreditCard":189,"./lib/isCurrency":190,"./lib/isDataURI":191,"./lib/isDecimal":192,"./lib/isDivisibleBy":193,"./lib/isEmail":194,"./lib/isEmpty":195,"./lib/isFQDN":196,"./lib/isFloat":197,"./lib/isFullWidth":198,"./lib/isHalfWidth":199,"./lib/isHash":200,"./lib/isHexColor":201,"./lib/isHexadecimal":202,"./lib/isIP":203,"./lib/isISBN":204,"./lib/isISIN":205,"./lib/isISO31661Alpha2":206,"./lib/isISO8601":207,"./lib/isISRC":208,"./lib/isISSN":209,"./lib/isIn":210,"./lib/isInt":211,"./lib/isJSON":212,"./lib/isLatLong":213,"./lib/isLength":214,"./lib/isLowercase":215,"./lib/isMACAddress":216,"./lib/isMD5":217,"./lib/isMimeType":218,"./lib/isMobilePhone":219,"./lib/isMongoId":220,"./lib/isMultibyte":221,"./lib/isNumeric":222,"./lib/isPort":223,"./lib/isPostalCode":224,"./lib/isSurrogatePair":225,"./lib/isURL":226,"./lib/isUUID":227,"./lib/isUppercase":228,"./lib/isVariableWidth":229,"./lib/isWhitelisted":230,"./lib/ltrim":231,"./lib/matches":232,"./lib/normalizeEmail":233,"./lib/rtrim":234,"./lib/stripLow":235,"./lib/toBoolean":236,"./lib/toDate":237,"./lib/toFloat":238,"./lib/toInt":239,"./lib/trim":240,"./lib/unescape":241,"./lib/util/toString":244,"./lib/whitelist":245}],176:[function(require,module,exports){
+},{"./lib/blacklist":180,"./lib/contains":181,"./lib/equals":182,"./lib/escape":183,"./lib/isAfter":184,"./lib/isAlpha":185,"./lib/isAlphanumeric":186,"./lib/isAscii":187,"./lib/isBase64":188,"./lib/isBefore":189,"./lib/isBoolean":190,"./lib/isByteLength":191,"./lib/isCreditCard":192,"./lib/isCurrency":193,"./lib/isDataURI":194,"./lib/isDecimal":195,"./lib/isDivisibleBy":196,"./lib/isEmail":197,"./lib/isEmpty":198,"./lib/isFQDN":199,"./lib/isFloat":200,"./lib/isFullWidth":201,"./lib/isHalfWidth":202,"./lib/isHash":203,"./lib/isHexColor":204,"./lib/isHexadecimal":205,"./lib/isIP":206,"./lib/isISBN":207,"./lib/isISIN":208,"./lib/isISO31661Alpha2":209,"./lib/isISO8601":210,"./lib/isISRC":211,"./lib/isISSN":212,"./lib/isIn":213,"./lib/isInt":214,"./lib/isJSON":215,"./lib/isLatLong":216,"./lib/isLength":217,"./lib/isLowercase":218,"./lib/isMACAddress":219,"./lib/isMD5":220,"./lib/isMimeType":221,"./lib/isMobilePhone":222,"./lib/isMongoId":223,"./lib/isMultibyte":224,"./lib/isNumeric":225,"./lib/isPort":226,"./lib/isPostalCode":227,"./lib/isSurrogatePair":228,"./lib/isURL":229,"./lib/isUUID":230,"./lib/isUppercase":231,"./lib/isVariableWidth":232,"./lib/isWhitelisted":233,"./lib/ltrim":234,"./lib/matches":235,"./lib/normalizeEmail":236,"./lib/rtrim":237,"./lib/stripLow":238,"./lib/toBoolean":239,"./lib/toDate":240,"./lib/toFloat":241,"./lib/toInt":242,"./lib/trim":243,"./lib/unescape":244,"./lib/util/toString":247,"./lib/whitelist":248}],179:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29723,7 +29858,7 @@ for (var _i3 = 0; _i3 < commaDecimal.length; _i3++) {
 alpha['pt-BR'] = alpha['pt-PT'];
 alphanumeric['pt-BR'] = alphanumeric['pt-PT'];
 decimal['pt-BR'] = decimal['pt-PT'];
-},{}],177:[function(require,module,exports){
+},{}],180:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29742,7 +29877,7 @@ function blacklist(str, chars) {
   return str.replace(new RegExp('[' + chars + ']+', 'g'), '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],178:[function(require,module,exports){
+},{"./util/assertString":245}],181:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29765,7 +29900,7 @@ function contains(str, elem) {
   return str.indexOf((0, _toString2.default)(elem)) >= 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242,"./util/toString":244}],179:[function(require,module,exports){
+},{"./util/assertString":245,"./util/toString":247}],182:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29784,7 +29919,7 @@ function equals(str, comparison) {
   return str === comparison;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],180:[function(require,module,exports){
+},{"./util/assertString":245}],183:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29803,7 +29938,7 @@ function escape(str) {
   return str.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#x27;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/\//g, '&#x2F;').replace(/\\/g, '&#x5C;').replace(/`/g, '&#96;');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],181:[function(require,module,exports){
+},{"./util/assertString":245}],184:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29830,7 +29965,7 @@ function isAfter(str) {
   return !!(original && comparison && original > comparison);
 }
 module.exports = exports['default'];
-},{"./toDate":237,"./util/assertString":242}],182:[function(require,module,exports){
+},{"./toDate":240,"./util/assertString":245}],185:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29856,7 +29991,7 @@ function isAlpha(str) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":176,"./util/assertString":242}],183:[function(require,module,exports){
+},{"./alpha":179,"./util/assertString":245}],186:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29882,7 +30017,7 @@ function isAlphanumeric(str) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":176,"./util/assertString":242}],184:[function(require,module,exports){
+},{"./alpha":179,"./util/assertString":245}],187:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29905,7 +30040,7 @@ function isAscii(str) {
   return ascii.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],185:[function(require,module,exports){
+},{"./util/assertString":245}],188:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29931,7 +30066,7 @@ function isBase64(str) {
   return firstPaddingChar === -1 || firstPaddingChar === len - 1 || firstPaddingChar === len - 2 && str[len - 1] === '=';
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],186:[function(require,module,exports){
+},{"./util/assertString":245}],189:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29958,7 +30093,7 @@ function isBefore(str) {
   return !!(original && comparison && original < comparison);
 }
 module.exports = exports['default'];
-},{"./toDate":237,"./util/assertString":242}],187:[function(require,module,exports){
+},{"./toDate":240,"./util/assertString":245}],190:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -29977,7 +30112,7 @@ function isBoolean(str) {
   return ['true', 'false', '1', '0'].indexOf(str) >= 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],188:[function(require,module,exports){
+},{"./util/assertString":245}],191:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30011,7 +30146,7 @@ function isByteLength(str, options) {
   return len >= min && (typeof max === 'undefined' || len <= max);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],189:[function(require,module,exports){
+},{"./util/assertString":245}],192:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30057,7 +30192,7 @@ function isCreditCard(str) {
   return !!(sum % 10 === 0 ? sanitized : false);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],190:[function(require,module,exports){
+},{"./util/assertString":245}],193:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30150,7 +30285,7 @@ function isCurrency(str, options) {
   return currencyRegex(options).test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242,"./util/merge":243}],191:[function(require,module,exports){
+},{"./util/assertString":245,"./util/merge":246}],194:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30200,7 +30335,7 @@ function isDataURI(str) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],192:[function(require,module,exports){
+},{"./util/assertString":245}],195:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30242,7 +30377,7 @@ function isDecimal(str, options) {
   throw new Error('Invalid locale \'' + options.locale + '\'');
 }
 module.exports = exports['default'];
-},{"./alpha":176,"./util/assertString":242,"./util/merge":243}],193:[function(require,module,exports){
+},{"./alpha":179,"./util/assertString":245,"./util/merge":246}],196:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30265,7 +30400,7 @@ function isDivisibleBy(str, num) {
   return (0, _toFloat2.default)(str) % parseInt(num, 10) === 0;
 }
 module.exports = exports['default'];
-},{"./toFloat":238,"./util/assertString":242}],194:[function(require,module,exports){
+},{"./toFloat":241,"./util/assertString":245}],197:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30355,7 +30490,7 @@ function isEmail(str, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./isByteLength":188,"./isFQDN":196,"./util/assertString":242,"./util/merge":243}],195:[function(require,module,exports){
+},{"./isByteLength":191,"./isFQDN":199,"./util/assertString":245,"./util/merge":246}],198:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30374,7 +30509,7 @@ function isEmpty(str) {
   return str.length === 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],196:[function(require,module,exports){
+},{"./util/assertString":245}],199:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30436,7 +30571,7 @@ function isFQDN(str, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242,"./util/merge":243}],197:[function(require,module,exports){
+},{"./util/assertString":245,"./util/merge":246}],200:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30462,7 +30597,7 @@ function isFloat(str, options) {
   return float.test(str) && (!options.hasOwnProperty('min') || str >= options.min) && (!options.hasOwnProperty('max') || str <= options.max) && (!options.hasOwnProperty('lt') || str < options.lt) && (!options.hasOwnProperty('gt') || str > options.gt);
 }
 module.exports = exports['default'];
-},{"./alpha":176,"./util/assertString":242}],198:[function(require,module,exports){
+},{"./alpha":179,"./util/assertString":245}],201:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30483,7 +30618,7 @@ function isFullWidth(str) {
   (0, _assertString2.default)(str);
   return fullWidth.test(str);
 }
-},{"./util/assertString":242}],199:[function(require,module,exports){
+},{"./util/assertString":245}],202:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30504,7 +30639,7 @@ function isHalfWidth(str) {
   (0, _assertString2.default)(str);
   return halfWidth.test(str);
 }
-},{"./util/assertString":242}],200:[function(require,module,exports){
+},{"./util/assertString":245}],203:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30540,7 +30675,7 @@ function isHash(str, algorithm) {
   return hash.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],201:[function(require,module,exports){
+},{"./util/assertString":245}],204:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30561,7 +30696,7 @@ function isHexColor(str) {
   return hexcolor.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],202:[function(require,module,exports){
+},{"./util/assertString":245}],205:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30582,7 +30717,7 @@ function isHexadecimal(str) {
   return hexadecimal.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],203:[function(require,module,exports){
+},{"./util/assertString":245}],206:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30664,7 +30799,7 @@ function isIP(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],204:[function(require,module,exports){
+},{"./util/assertString":245}],207:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30722,7 +30857,7 @@ function isISBN(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],205:[function(require,module,exports){
+},{"./util/assertString":245}],208:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30771,7 +30906,7 @@ function isISIN(str) {
   return parseInt(str.substr(str.length - 1), 10) === (10000 - sum) % 10;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],206:[function(require,module,exports){
+},{"./util/assertString":245}],209:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30793,7 +30928,7 @@ function isISO31661Alpha2(str) {
   return validISO31661Alpha2CountriesCodes.includes(str.toUpperCase());
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],207:[function(require,module,exports){
+},{"./util/assertString":245}],210:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30817,7 +30952,7 @@ function isISO8601(str) {
   return iso8601.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],208:[function(require,module,exports){
+},{"./util/assertString":245}],211:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30839,7 +30974,7 @@ function isISRC(str) {
   return isrc.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],209:[function(require,module,exports){
+},{"./util/assertString":245}],212:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30898,7 +31033,7 @@ function isISSN(str) {
   return checksum % 11 === 0;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],210:[function(require,module,exports){
+},{"./util/assertString":245}],213:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30938,7 +31073,7 @@ function isIn(str, options) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242,"./util/toString":244}],211:[function(require,module,exports){
+},{"./util/assertString":245,"./util/toString":247}],214:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30972,7 +31107,7 @@ function isInt(str, options) {
   return regex.test(str) && minCheckPassed && maxCheckPassed && ltCheckPassed && gtCheckPassed;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],212:[function(require,module,exports){
+},{"./util/assertString":245}],215:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -30998,7 +31133,7 @@ function isJSON(str) {
   return false;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],213:[function(require,module,exports){
+},{"./util/assertString":245}],216:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31022,7 +31157,7 @@ var lat = /^\(?[+-]?(90(\.0+)?|[1-8]?\d(\.\d+)?)$/;
 var long = /^\s?[+-]?(180(\.0+)?|1[0-7]\d(\.\d+)?|\d{1,2}(\.\d+)?)\)?$/;
 
 module.exports = exports['default'];
-},{"./util/assertString":242}],214:[function(require,module,exports){
+},{"./util/assertString":245}],217:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31057,7 +31192,7 @@ function isLength(str, options) {
   return len >= min && (typeof max === 'undefined' || len <= max);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],215:[function(require,module,exports){
+},{"./util/assertString":245}],218:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31076,7 +31211,7 @@ function isLowercase(str) {
   return str === str.toLowerCase();
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],216:[function(require,module,exports){
+},{"./util/assertString":245}],219:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31097,7 +31232,7 @@ function isMACAddress(str) {
   return macAddress.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],217:[function(require,module,exports){
+},{"./util/assertString":245}],220:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31118,7 +31253,7 @@ function isMD5(str) {
   return md5.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],218:[function(require,module,exports){
+},{"./util/assertString":245}],221:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31171,7 +31306,7 @@ function isMimeType(str) {
   return mimeTypeSimple.test(str) || mimeTypeText.test(str) || mimeTypeMultipart.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],219:[function(require,module,exports){
+},{"./util/assertString":245}],222:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31275,7 +31410,7 @@ function isMobilePhone(str, locale, options) {
   throw new Error('Invalid locale \'' + locale + '\'');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],220:[function(require,module,exports){
+},{"./util/assertString":245}],223:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31298,7 +31433,7 @@ function isMongoId(str) {
   return (0, _isHexadecimal2.default)(str) && str.length === 24;
 }
 module.exports = exports['default'];
-},{"./isHexadecimal":202,"./util/assertString":242}],221:[function(require,module,exports){
+},{"./isHexadecimal":205,"./util/assertString":245}],224:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31321,7 +31456,7 @@ function isMultibyte(str) {
   return multibyte.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],222:[function(require,module,exports){
+},{"./util/assertString":245}],225:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31342,7 +31477,7 @@ function isNumeric(str) {
   return numeric.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],223:[function(require,module,exports){
+},{"./util/assertString":245}],226:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31360,7 +31495,7 @@ function isPort(str) {
   return (0, _isInt2.default)(str, { min: 0, max: 65535 });
 }
 module.exports = exports['default'];
-},{"./isInt":211}],224:[function(require,module,exports){
+},{"./isInt":214}],227:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31437,7 +31572,7 @@ var patterns = {
 };
 
 var locales = exports.locales = Object.keys(patterns);
-},{"./util/assertString":242}],225:[function(require,module,exports){
+},{"./util/assertString":245}],228:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31458,7 +31593,7 @@ function isSurrogatePair(str) {
   return surrogatePair.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],226:[function(require,module,exports){
+},{"./util/assertString":245}],229:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31606,7 +31741,7 @@ function isURL(url, options) {
   return true;
 }
 module.exports = exports['default'];
-},{"./isFQDN":196,"./isIP":203,"./util/assertString":242,"./util/merge":243}],227:[function(require,module,exports){
+},{"./isFQDN":199,"./isIP":206,"./util/assertString":245,"./util/merge":246}],230:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31635,7 +31770,7 @@ function isUUID(str) {
   return pattern && pattern.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],228:[function(require,module,exports){
+},{"./util/assertString":245}],231:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31654,7 +31789,7 @@ function isUppercase(str) {
   return str === str.toUpperCase();
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],229:[function(require,module,exports){
+},{"./util/assertString":245}],232:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31677,7 +31812,7 @@ function isVariableWidth(str) {
   return _isFullWidth.fullWidth.test(str) && _isHalfWidth.halfWidth.test(str);
 }
 module.exports = exports['default'];
-},{"./isFullWidth":198,"./isHalfWidth":199,"./util/assertString":242}],230:[function(require,module,exports){
+},{"./isFullWidth":201,"./isHalfWidth":202,"./util/assertString":245}],233:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31701,7 +31836,7 @@ function isWhitelisted(str, chars) {
   return true;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],231:[function(require,module,exports){
+},{"./util/assertString":245}],234:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31721,7 +31856,7 @@ function ltrim(str, chars) {
   return str.replace(pattern, '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],232:[function(require,module,exports){
+},{"./util/assertString":245}],235:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31743,7 +31878,7 @@ function matches(str, pattern, modifiers) {
   return pattern.test(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],233:[function(require,module,exports){
+},{"./util/assertString":245}],236:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31873,7 +32008,7 @@ function normalizeEmail(email, options) {
   return parts.join('@');
 }
 module.exports = exports['default'];
-},{"./util/merge":243}],234:[function(require,module,exports){
+},{"./util/merge":246}],237:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31899,7 +32034,7 @@ function rtrim(str, chars) {
   return idx < str.length ? str.substr(0, idx + 1) : str;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],235:[function(require,module,exports){
+},{"./util/assertString":245}],238:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31923,7 +32058,7 @@ function stripLow(str, keep_new_lines) {
   return (0, _blacklist2.default)(str, chars);
 }
 module.exports = exports['default'];
-},{"./blacklist":177,"./util/assertString":242}],236:[function(require,module,exports){
+},{"./blacklist":180,"./util/assertString":245}],239:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31945,7 +32080,7 @@ function toBoolean(str, strict) {
   return str !== '0' && str !== 'false' && str !== '';
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],237:[function(require,module,exports){
+},{"./util/assertString":245}],240:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31965,7 +32100,7 @@ function toDate(date) {
   return !isNaN(date) ? new Date(date) : null;
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],238:[function(require,module,exports){
+},{"./util/assertString":245}],241:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -31984,7 +32119,7 @@ function toFloat(str) {
   return parseFloat(str);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],239:[function(require,module,exports){
+},{"./util/assertString":245}],242:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32003,7 +32138,7 @@ function toInt(str, radix) {
   return parseInt(str, radix || 10);
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],240:[function(require,module,exports){
+},{"./util/assertString":245}],243:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32025,7 +32160,7 @@ function trim(str, chars) {
   return (0, _rtrim2.default)((0, _ltrim2.default)(str, chars), chars);
 }
 module.exports = exports['default'];
-},{"./ltrim":231,"./rtrim":234}],241:[function(require,module,exports){
+},{"./ltrim":234,"./rtrim":237}],244:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32044,7 +32179,7 @@ function unescape(str) {
   return str.replace(/&amp;/g, '&').replace(/&quot;/g, '"').replace(/&#x27;/g, "'").replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&#x2F;/g, '/').replace(/&#x5C;/g, '\\').replace(/&#96;/g, '`');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],242:[function(require,module,exports){
+},{"./util/assertString":245}],245:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32059,7 +32194,7 @@ function assertString(input) {
   }
 }
 module.exports = exports['default'];
-},{}],243:[function(require,module,exports){
+},{}],246:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32078,7 +32213,7 @@ function merge() {
   return obj;
 }
 module.exports = exports['default'];
-},{}],244:[function(require,module,exports){
+},{}],247:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32101,7 +32236,7 @@ function toString(input) {
   return String(input);
 }
 module.exports = exports['default'];
-},{}],245:[function(require,module,exports){
+},{}],248:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, "__esModule", {
@@ -32120,7 +32255,7 @@ function whitelist(str, chars) {
   return str.replace(new RegExp('[^' + chars + ']+', 'g'), '');
 }
 module.exports = exports['default'];
-},{"./util/assertString":242}],246:[function(require,module,exports){
+},{"./util/assertString":245}],249:[function(require,module,exports){
 (function(self) {
   'use strict';
 
