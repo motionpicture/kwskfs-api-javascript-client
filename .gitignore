@@ -9,7 +9,9 @@ coverage/
 **/*.js
 **/*.js.map
 **/*.d.ts
+
 !example/**/*.js
+!/browser.js
 
 !.gitignore
 !.gitkeep

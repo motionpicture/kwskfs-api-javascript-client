@@ -1,0 +1,1 @@
+var kwskfs = window.kwskfs = require('./lib/index.js');
